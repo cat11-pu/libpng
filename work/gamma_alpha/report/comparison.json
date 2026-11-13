@@ -1,0 +1,684 @@
+[
+  {
+    "image": "ga8_linear.png",
+    "pixels": 256,
+    "fixed_vs_reference_mismatch_pixels": 0,
+    "fixed_matches_reference": true,
+    "buggy_gamma_drift_pixels": 196,
+    "buggy_gamma_max_channel_delta": 134,
+    "buggy_transparent_fringe_pixels": 32,
+    "buggy_total_differing_bytes": 684,
+    "gamma_drift_examples": [
+      [
+        33,
+        [
+          1,
+          1,
+          1,
+          129
+        ],
+        [
+          74,
+          74,
+          74,
+          129
+        ]
+      ],
+      [
+        34,
+        [
+          3,
+          3,
+          3,
+          130
+        ],
+        [
+          102,
+          102,
+          102,
+          130
+        ]
+      ],
+      [
+        35,
+        [
+          7,
+          7,
+          7,
+          131
+        ],
+        [
+          123,
+          123,
+          123,
+          131
+        ]
+      ]
+    ],
+    "fringe_examples": [
+      [
+        0,
+        [
+          255,
+          255,
+          255,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        1,
+        [
+          255,
+          255,
+          255,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        2,
+        [
+          255,
+          255,
+          255,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    ]
+  },
+  {
+    "image": "gray8_trns_gama22.png",
+    "pixels": 256,
+    "fixed_vs_reference_mismatch_pixels": 0,
+    "fixed_matches_reference": true,
+    "buggy_gamma_drift_pixels": 239,
+    "buggy_gamma_max_channel_delta": 72,
+    "buggy_transparent_fringe_pixels": 16,
+    "buggy_total_differing_bytes": 765,
+    "gamma_drift_examples": [
+      [
+        1,
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          1,
+          1,
+          1,
+          255
+        ]
+      ],
+      [
+        2,
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          2,
+          2,
+          2,
+          255
+        ]
+      ],
+      [
+        3,
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          3,
+          3,
+          3,
+          255
+        ]
+      ]
+    ],
+    "fringe_examples": [
+      [
+        0,
+        [
+          56,
+          56,
+          56,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        16,
+        [
+          56,
+          56,
+          56,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        32,
+        [
+          56,
+          56,
+          56,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    ]
+  },
+  {
+    "image": "palette8_trns.png",
+    "pixels": 256,
+    "fixed_vs_reference_mismatch_pixels": 0,
+    "fixed_matches_reference": true,
+    "buggy_gamma_drift_pixels": 0,
+    "buggy_gamma_max_channel_delta": 0,
+    "buggy_transparent_fringe_pixels": 88,
+    "buggy_total_differing_bytes": 88,
+    "gamma_drift_examples": [],
+    "fringe_examples": [
+      [
+        0,
+        [
+          255,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        4,
+        [
+          255,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        8,
+        [
+          255,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    ]
+  },
+  {
+    "image": "rgb8_trns_gama22.png",
+    "pixels": 256,
+    "fixed_vs_reference_mismatch_pixels": 0,
+    "fixed_matches_reference": true,
+    "buggy_gamma_drift_pixels": 239,
+    "buggy_gamma_max_channel_delta": 72,
+    "buggy_transparent_fringe_pixels": 16,
+    "buggy_total_differing_bytes": 707,
+    "gamma_drift_examples": [
+      [
+        1,
+        [
+          1,
+          0,
+          0,
+          255
+        ],
+        [
+          15,
+          0,
+          0,
+          255
+        ]
+      ],
+      [
+        2,
+        [
+          2,
+          0,
+          0,
+          255
+        ],
+        [
+          30,
+          0,
+          0,
+          255
+        ]
+      ],
+      [
+        3,
+        [
+          6,
+          0,
+          0,
+          255
+        ],
+        [
+          45,
+          0,
+          0,
+          255
+        ]
+      ]
+    ],
+    "fringe_examples": [
+      [
+        240,
+        [
+          149,
+          33,
+          7,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        241,
+        [
+          149,
+          33,
+          7,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        242,
+        [
+          149,
+          33,
+          7,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    ]
+  },
+  {
+    "image": "rgba16_gama22.png",
+    "pixels": 256,
+    "fixed_vs_reference_mismatch_pixels": 0,
+    "fixed_matches_reference": true,
+    "buggy_gamma_drift_pixels": 239,
+    "buggy_gamma_max_channel_delta": 72,
+    "buggy_transparent_fringe_pixels": 16,
+    "buggy_total_differing_bytes": 720,
+    "gamma_drift_examples": [
+      [
+        1,
+        [
+          1,
+          0,
+          0,
+          3
+        ],
+        [
+          15,
+          0,
+          7,
+          3
+        ]
+      ],
+      [
+        2,
+        [
+          2,
+          0,
+          1,
+          3
+        ],
+        [
+          31,
+          0,
+          15,
+          3
+        ]
+      ],
+      [
+        3,
+        [
+          6,
+          0,
+          1,
+          3
+        ],
+        [
+          46,
+          0,
+          23,
+          3
+        ]
+      ]
+    ],
+    "fringe_examples": [
+      [
+        8,
+        [
+          210,
+          0,
+          46,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        24,
+        [
+          210,
+          0,
+          46,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        40,
+        [
+          210,
+          0,
+          46,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    ]
+  },
+  {
+    "image": "rgba8_gama22.png",
+    "pixels": 256,
+    "fixed_vs_reference_mismatch_pixels": 0,
+    "fixed_matches_reference": true,
+    "buggy_gamma_drift_pixels": 196,
+    "buggy_gamma_max_channel_delta": 72,
+    "buggy_transparent_fringe_pixels": 60,
+    "buggy_total_differing_bytes": 708,
+    "gamma_drift_examples": [
+      [
+        17,
+        [
+          1,
+          1,
+          1,
+          65
+        ],
+        [
+          17,
+          17,
+          18,
+          65
+        ]
+      ],
+      [
+        18,
+        [
+          3,
+          1,
+          2,
+          66
+        ],
+        [
+          34,
+          17,
+          27,
+          66
+        ]
+      ],
+      [
+        19,
+        [
+          7,
+          1,
+          3,
+          67
+        ],
+        [
+          51,
+          17,
+          36,
+          67
+        ]
+      ]
+    ],
+    "fringe_examples": [
+      [
+        0,
+        [
+          255,
+          0,
+          56,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        1,
+        [
+          255,
+          0,
+          56,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        2,
+        [
+          255,
+          0,
+          56,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    ]
+  },
+  {
+    "image": "rgba8_srgb_adam7.png",
+    "pixels": 256,
+    "fixed_vs_reference_mismatch_pixels": 0,
+    "fixed_matches_reference": true,
+    "buggy_gamma_drift_pixels": 204,
+    "buggy_gamma_max_channel_delta": 72,
+    "buggy_transparent_fringe_pixels": 52,
+    "buggy_total_differing_bytes": 680,
+    "gamma_drift_examples": [
+      [
+        1,
+        [
+          0,
+          0,
+          0,
+          255
+        ],
+        [
+          13,
+          0,
+          1,
+          255
+        ]
+      ],
+      [
+        2,
+        [
+          2,
+          0,
+          0,
+          255
+        ],
+        [
+          26,
+          0,
+          2,
+          255
+        ]
+      ],
+      [
+        3,
+        [
+          4,
+          0,
+          0,
+          255
+        ],
+        [
+          39,
+          0,
+          3,
+          255
+        ]
+      ]
+    ],
+    "fringe_examples": [
+      [
+        0,
+        [
+          0,
+          255,
+          255,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        5,
+        [
+          0,
+          255,
+          255,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      [
+        10,
+        [
+          0,
+          255,
+          255,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    ]
+  }
+]
