@@ -387,5 +387,107 @@ void png_read_filter_row_paeth4_sse2(png_row_infop row_info, png_bytep row,
    }
 }
 
+#ifdef PNG_INTEL_SSE41_SUPPORTED
+__attribute__((target("sse4.1")))
+void png_read_filter_row_paeth3_sse41(png_row_infop row_info, png_bytep row,
+   png_const_bytep prev)
+{
+   size_t rb;
+   const __m128i zero = _mm_setzero_si128();
+   __m128i c, b = zero,
+           a, d = zero;
+
+   png_debug(1, "in png_read_filter_row_paeth3_sse41");
+
+   rb = row_info->rowbytes;
+   while (rb >= 4)
+   {
+      __m128i pa, pb, pc, smallest, nearest;
+
+      c = b;
+      b = _mm_unpacklo_epi8(load4(prev), zero);
+      a = d;
+      d = _mm_unpacklo_epi8(load4(row), zero);
+
+      pa = _mm_abs_epi16(_mm_sub_epi16(b, c));
+      pb = _mm_abs_epi16(_mm_sub_epi16(a, c));
+      pc = _mm_abs_epi16(_mm_add_epi16(_mm_sub_epi16(b, c),
+            _mm_sub_epi16(a, c)));
+
+      smallest = _mm_min_epi16(pc, _mm_min_epi16(pa, pb));
+      nearest = _mm_blendv_epi8(c, b, _mm_cmpeq_epi16(smallest, pb));
+      nearest = _mm_blendv_epi8(nearest, a, _mm_cmpeq_epi16(smallest, pa));
+
+      d = _mm_add_epi8(d, nearest);
+      store3(row, _mm_packus_epi16(d, d));
+
+      prev += 3;
+      row += 3;
+      rb -= 3;
+   }
+
+   if (rb > 0)
+   {
+      __m128i pa, pb, pc, smallest, nearest;
+
+      c = b;
+      b = _mm_unpacklo_epi8(load3(prev), zero);
+      a = d;
+      d = _mm_unpacklo_epi8(load3(row), zero);
+
+      pa = _mm_abs_epi16(_mm_sub_epi16(b, c));
+      pb = _mm_abs_epi16(_mm_sub_epi16(a, c));
+      pc = _mm_abs_epi16(_mm_add_epi16(_mm_sub_epi16(b, c),
+            _mm_sub_epi16(a, c)));
+
+      smallest = _mm_min_epi16(pc, _mm_min_epi16(pa, pb));
+      nearest = _mm_blendv_epi8(c, b, _mm_cmpeq_epi16(smallest, pb));
+      nearest = _mm_blendv_epi8(nearest, a, _mm_cmpeq_epi16(smallest, pa));
+
+      d = _mm_add_epi8(d, nearest);
+      store3(row, _mm_packus_epi16(d, d));
+   }
+}
+
+__attribute__((target("sse4.1")))
+void png_read_filter_row_paeth4_sse41(png_row_infop row_info, png_bytep row,
+   png_const_bytep prev)
+{
+   size_t rb;
+   const __m128i zero = _mm_setzero_si128();
+   __m128i c, b = zero,
+           a, d = zero;
+
+   png_debug(1, "in png_read_filter_row_paeth4_sse41");
+
+   rb = row_info->rowbytes + 4;
+   while (rb > 4)
+   {
+      __m128i pa, pb, pc, smallest, nearest;
+
+      c = b;
+      b = _mm_unpacklo_epi8(load4(prev), zero);
+      a = d;
+      d = _mm_unpacklo_epi8(load4(row), zero);
+
+      pa = _mm_abs_epi16(_mm_sub_epi16(b, c));
+      pb = _mm_abs_epi16(_mm_sub_epi16(a, c));
+      pc = _mm_abs_epi16(_mm_add_epi16(_mm_sub_epi16(b, c),
+            _mm_sub_epi16(a, c)));
+
+      smallest = _mm_min_epi16(pc, _mm_min_epi16(pa, pb));
+      nearest = _mm_blendv_epi8(c, b, _mm_cmpeq_epi16(smallest, pb));
+      nearest = _mm_blendv_epi8(nearest, a, _mm_cmpeq_epi16(smallest, pa));
+
+      d = _mm_add_epi8(d, nearest);
+      store4(row, _mm_packus_epi16(d, d));
+
+      prev += 4;
+      row += 4;
+      rb -= 4;
+   }
+}
+#endif
+
 #endif /* PNG_INTEL_SSE_IMPLEMENTATION > 0 */
 #endif /* READ */

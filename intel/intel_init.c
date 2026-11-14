@@ -27,11 +27,29 @@ png_init_filter_functions_sse2(png_structp pp, unsigned int bpp)
     * Most of these can be implemented using only MMX and 64-bit registers,
     * but they end up a bit slower than using the equally-ubiquitous SSE2.
    */
+#ifdef PNG_INTEL_SSE41_SUPPORTED
+   int use_sse41;
+
+#  ifndef __clang__
+   __builtin_cpu_init();
+#  endif
+   use_sse41 = __builtin_cpu_supports("sse4.1");
+#else
+   int use_sse41 = 0;
+#endif
+
    png_debug(1, "in png_init_filter_functions_sse2");
+
    if (bpp == 3)
    {
       pp->read_filter[PNG_FILTER_VALUE_SUB-1] = png_read_filter_row_sub3_sse2;
       pp->read_filter[PNG_FILTER_VALUE_AVG-1] = png_read_filter_row_avg3_sse2;
+#ifdef PNG_INTEL_SSE41_SUPPORTED
+      if (use_sse41)
+         pp->read_filter[PNG_FILTER_VALUE_PAETH-1] =
+            png_read_filter_row_paeth3_sse41;
+      else
+#endif
       pp->read_filter[PNG_FILTER_VALUE_PAETH-1] =
          png_read_filter_row_paeth3_sse2;
    }
@@ -39,6 +57,12 @@ png_init_filter_functions_sse2(png_structp pp, unsigned int bpp)
    {
       pp->read_filter[PNG_FILTER_VALUE_SUB-1] = png_read_filter_row_sub4_sse2;
       pp->read_filter[PNG_FILTER_VALUE_AVG-1] = png_read_filter_row_avg4_sse2;
+#ifdef PNG_INTEL_SSE41_SUPPORTED
+      if (use_sse41)
+         pp->read_filter[PNG_FILTER_VALUE_PAETH-1] =
+            png_read_filter_row_paeth4_sse41;
+      else
+#endif
       pp->read_filter[PNG_FILTER_VALUE_PAETH-1] =
           png_read_filter_row_paeth4_sse2;
    }

@@ -245,6 +245,12 @@
 #   define PNG_INTEL_SSE_IMPLEMENTATION 0
 #endif
 
+#if PNG_INTEL_SSE_IMPLEMENTATION > 0 && \
+    (defined(__GNUC__) || defined(__clang__)) && \
+    (defined(__i386__) || defined(__x86_64__))
+#  define PNG_INTEL_SSE41_SUPPORTED 1
+#endif
+
 #if PNG_MIPS_MSA_OPT > 0
 #  define PNG_FILTER_OPTIMIZATIONS png_init_filter_functions_msa
 #  ifndef PNG_MIPS_MSA_IMPLEMENTATION
@@ -1362,6 +1368,12 @@ PNG_INTERNAL_FUNCTION(void,png_read_filter_row_paeth3_sse2,(png_row_infop
     row_info, png_bytep row, png_const_bytep prev_row),PNG_EMPTY);
 PNG_INTERNAL_FUNCTION(void,png_read_filter_row_paeth4_sse2,(png_row_infop
     row_info, png_bytep row, png_const_bytep prev_row),PNG_EMPTY);
+#  ifdef PNG_INTEL_SSE41_SUPPORTED
+PNG_INTERNAL_FUNCTION(void,png_read_filter_row_paeth3_sse41,(png_row_infop
+    row_info, png_bytep row, png_const_bytep prev_row),PNG_EMPTY);
+PNG_INTERNAL_FUNCTION(void,png_read_filter_row_paeth4_sse41,(png_row_infop
+    row_info, png_bytep row, png_const_bytep prev_row),PNG_EMPTY);
+#  endif
 #endif
 
 /* Choose the best filter to use and filter the row data */

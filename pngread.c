@@ -383,6 +383,7 @@ void PNGAPI
 png_read_row(png_structrp png_ptr, png_bytep row, png_bytep dsp_row)
 {
    png_row_info row_info;
+   int swap_row_buffers = 0;
 
    if (png_ptr == NULL)
       return;
@@ -556,7 +557,16 @@ png_read_row(png_structrp png_ptr, png_bytep row, png_bytep dsp_row)
     * it may not be in the future, so this was changed just to copy the
     * interlaced count:
     */
-   memcpy(png_ptr->prev_row, png_ptr->row_buf, row_info.rowbytes + 1);
+   if (png_ptr->transformations == 0
+#ifdef PNG_MNG_FEATURES_SUPPORTED
+       && ((png_ptr->mng_features_permitted & PNG_FLAG_MNG_FILTER_64) == 0 ||
+           png_ptr->filter_type != PNG_INTRAPIXEL_DIFFERENCING)
+#endif
+      )
+      swap_row_buffers = 1;
+
+   else
+      memcpy(png_ptr->prev_row, png_ptr->row_buf, row_info.rowbytes + 1);
 
 #ifdef PNG_MNG_FEATURES_SUPPORTED
    if ((png_ptr->mng_features_permitted & PNG_FLAG_MNG_FILTER_64) != 0 &&
@@ -608,6 +618,15 @@ png_read_row(png_structrp png_ptr, png_bytep row, png_bytep dsp_row)
       if (dsp_row != NULL)
          png_combine_row(png_ptr, dsp_row, -1/*ignored*/);
    }
+
+   if (swap_row_buffers != 0)
+   {
+      png_bytep tmp = png_ptr->row_buf;
+
+      png_ptr->row_buf = png_ptr->prev_row;
+      png_ptr->prev_row = tmp;
+   }
+
    png_read_finish_row(png_ptr);
 
    if (png_ptr->read_row_fn != NULL)
