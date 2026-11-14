@@ -4281,11 +4281,25 @@ png_read_finish_IDAT(png_structrp png_ptr)
     */
    if ((png_ptr->flags & PNG_FLAG_ZSTREAM_ENDED) == 0)
    {
-      /* The NULL causes png_read_IDAT_data to swallow any remaining bytes in
-       * the compressed stream, but the stream may be damaged too, so even after
-       * this call we may need to terminate the zstream ownership.
-       */
-      png_read_IDAT_data(png_ptr, NULL, 0);
+#ifdef PNG_SEQUENTIAL_READ_SUPPORTED
+      if (png_ptr->region_set != 0)
+      {
+         /* Region reading stops before the end of the image data; the
+          * remaining deflate stream is valid but unwanted, so skip it
+          * without inflating it.
+          */
+      }
+
+      else
+#endif
+      {
+         /* The NULL causes png_read_IDAT_data to swallow any remaining bytes
+          * in the compressed stream, but the stream may be damaged too, so
+          * even after this call we may need to terminate the zstream
+          * ownership.
+          */
+         png_read_IDAT_data(png_ptr, NULL, 0);
+      }
       png_ptr->zstream.next_out = NULL; /* safety */
 
       /* Now clear everything out for safety; the following may not have been

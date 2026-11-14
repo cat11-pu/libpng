@@ -253,3 +253,5 @@ EXPORTS
  png_set_eXIf @247
  png_get_eXIf_1 @248
  png_set_eXIf_1 @249
+ png_set_read_region @250
+ png_get_read_region @251

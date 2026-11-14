@@ -46,6 +46,32 @@ png_get_rows(png_const_structrp png_ptr, png_const_inforp info_ptr)
 }
 #endif
 
+#ifdef PNG_SEQUENTIAL_READ_SUPPORTED
+int PNGAPI
+png_get_read_region(png_const_structrp png_ptr, png_uint_32 *x,
+    png_uint_32 *y, png_uint_32 *width, png_uint_32 *height)
+{
+   png_debug(1, "in png_get_read_region");
+
+   if (png_ptr == NULL || png_ptr->region_set == 0)
+      return 0;
+
+   if (x != NULL)
+      *x = png_ptr->region_x;
+
+   if (y != NULL)
+      *y = png_ptr->region_y;
+
+   if (width != NULL)
+      *width = png_ptr->region_width;
+
+   if (height != NULL)
+      *height = png_ptr->region_height;
+
+   return 1;
+}
+#endif
+
 #ifdef PNG_EASY_ACCESS_SUPPORTED
 /* Easy access to info, added in libpng-0.99 */
 png_uint_32 PNGAPI

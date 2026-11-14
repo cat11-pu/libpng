@@ -1382,6 +1382,35 @@ PNG_EXPORT(56, void, png_read_row, (png_structrp png_ptr, png_bytep row,
 #ifdef PNG_SEQUENTIAL_READ_SUPPORTED
 /* Read the whole image into memory at once. */
 PNG_EXPORT(57, void, png_read_image, (png_structrp png_ptr, png_bytepp image));
+
+/* Region-of-interest reading: restrict png_read_image (and png_read_row) to
+ * a rectangular sub-region of the image.  Must be called after
+ * png_read_info() and before png_read_image().
+ *
+ * The rectangle is clipped to the image bounds.  Only scanlines intersecting
+ * the region are fully processed and only the columns inside the region are
+ * delivered, so the application only supplies (and libpng only stores) a
+ * region-sized pixel buffer; the delivered pixels are identical to decoding
+ * the whole image and cropping it afterwards.
+ *
+ * When a region is set png_read_image() expects exactly region-height row
+ * pointers, each pointing to a row of PNG_ROWBYTES(transformed_pixel_depth,
+ * region_width) bytes.  Use png_get_read_region() to obtain the clipped
+ * region actually in effect.
+ *
+ * Returns 1 if the (clipped) region is non-empty, 0 if it lies completely
+ * outside the image (in which case png_read_image() delivers no rows).
+ */
+PNG_EXPORT(250, int, png_set_read_region, (png_structrp png_ptr,
+    png_uint_32 x, png_uint_32 y, png_uint_32 width, png_uint_32 height));
+
+/* Retrieve the region previously set with png_set_read_region() (after
+ * clipping to the image bounds).  Any of the output pointers may be NULL.
+ * Returns 1 if a region is in effect, 0 otherwise.
+ */
+PNG_EXPORT(251, int, png_get_read_region, (png_const_structrp png_ptr,
+    png_uint_32 *x, png_uint_32 *y, png_uint_32 *width,
+    png_uint_32 *height));
 #endif
 
 /* Write a row of image data */
@@ -3235,7 +3264,7 @@ PNG_EXPORT(244, int, png_set_option, (png_structrp png_ptr, int option,
  * one to use is one more than this.)
  */
 #ifdef PNG_EXPORT_LAST_ORDINAL
-  PNG_EXPORT_LAST_ORDINAL(249);
+  PNG_EXPORT_LAST_ORDINAL(251);
 #endif
 
 #ifdef __cplusplus

@@ -2221,6 +2221,34 @@ where row_pointers is:
 
 You can point to void or char or whatever you use for pixels.
 
+If you only need a rectangular sub-region of the image, you can avoid
+allocating (and fully decoding) the whole image by calling
+png_set_read_region() after png_read_info() and before png_read_image():
+
+   if (png_set_read_region(png_ptr, x, y, width, height) != 0)
+   {
+      png_get_read_region(png_ptr, &x, &y, &width, &height);
+      row_pointers = png_malloc(png_ptr,
+          height * sizeof (png_bytep));
+      for (i = 0; i < height; i++)
+         row_pointers[i] = png_malloc(png_ptr,
+             PNG_ROWBYTES(pixel_depth, width));
+      png_read_image(png_ptr, row_pointers);
+   }
+
+The rectangle is clipped to the image bounds; png_get_read_region()
+returns the clipped region actually in effect.  png_read_image() then
+expects only region-height row pointers to region-width rows and delivers
+pixels identical to decoding the whole image and cropping it afterwards.
+Rows above the region are still read and unfiltered internally (the
+deflate stream and the filter chain are sequential), but they are not
+transformed or stored, and rows below the region are not decoded at all,
+so memory usage scales with the region instead of the image.  For
+interlaced images libpng internally accumulates only the rows
+intersecting the region (at full row width, because the Adam7 passes
+contribute columns spread across the whole row) and crops them to the
+region columns when the last pass contributing to each row is complete.
+
 If you don't want to read in the whole image at once, you can
 use png_read_rows() instead.  If there is no interlacing (check
 interlace_type == PNG_INTERLACE_NONE), this is simple:

@@ -379,6 +379,74 @@ png_do_read_intrapixel(png_row_infop row_info, png_bytep row)
 }
 #endif /* MNG_FEATURES */
 
+/* Copy a horizontal span of pixels out of a full decoded row into a
+ * region row.  The span is expressed in bits so that sub-byte pixel depths
+ * (1, 2 and 4 bpp) are handled correctly; the destination is packed from
+ * bit 0.  Bits in the destination beyond the span are left untouched.
+ */
+static void
+png_region_copy_span(png_bytep dst, png_const_bytep src, size_t start_bit,
+    size_t nbits)
+{
+   if ((start_bit & 7) == 0 && (nbits & 7) == 0)
+      memcpy(dst, src + (start_bit >> 3), nbits >> 3);
+
+   else
+   {
+      size_t i;
+
+      for (i = 0; i < nbits; ++i)
+      {
+         size_t s = start_bit + i;
+
+         if ((src[s >> 3] & (0x80U >> (s & 7))) != 0)
+            dst[i >> 3] |= (png_byte)(0x80U >> (i & 7));
+
+         else
+            dst[i >> 3] &= (png_byte)~(0x80U >> (i & 7));
+      }
+   }
+}
+
+int PNGAPI
+png_set_read_region(png_structrp png_ptr, png_uint_32 x, png_uint_32 y,
+    png_uint_32 width, png_uint_32 height)
+{
+   png_debug(1, "in png_set_read_region");
+
+   if (png_ptr == NULL)
+      return 0;
+
+   if ((png_ptr->mode & PNG_HAVE_IHDR) == 0)
+      png_error(png_ptr, "png_set_read_region: call after png_read_info");
+
+   if (width == 0 || height == 0)
+      png_error(png_ptr, "png_set_read_region: zero-size region");
+
+   png_ptr->region_set = 1;
+
+   if (x >= png_ptr->width || y >= png_ptr->height)
+   {
+      /* The region lies completely outside the image; png_read_image will
+       * deliver no rows.
+       */
+      png_ptr->region_x = x;
+      png_ptr->region_y = y;
+      png_ptr->region_width = 0;
+      png_ptr->region_height = 0;
+      return 0;
+   }
+
+   /* Clip the region to the image bounds. */
+   png_ptr->region_x = x;
+   png_ptr->region_y = y;
+   png_ptr->region_width = width < png_ptr->width - x ?
+       width : png_ptr->width - x;
+   png_ptr->region_height = height < png_ptr->height - y ?
+       height : png_ptr->height - y;
+   return 1;
+}
+
 void PNGAPI
 png_read_row(png_structrp png_ptr, png_bytep row, png_bytep dsp_row)
 {
@@ -568,20 +636,29 @@ png_read_row(png_structrp png_ptr, png_bytep row, png_bytep dsp_row)
 #endif
 
 #ifdef PNG_READ_TRANSFORMS_SUPPORTED
-   if (png_ptr->transformations)
+   /* When reading a region, rows that are not delivered (no output row was
+    * supplied) do not need to be transformed: the transforms are row-local
+    * and the row is discarded anyway.  The row still had to be read and
+    * unfiltered above because the filter chain needs it.
+    */
+   if (png_ptr->transformations != 0 &&
+       (row != NULL || dsp_row != NULL || png_ptr->region_set == 0))
       png_do_read_transformations(png_ptr, &row_info);
 #endif
 
    /* The transformed pixel depth should match the depth now in row_info. */
-   if (png_ptr->transformed_pixel_depth == 0)
+   if (row != NULL || dsp_row != NULL || png_ptr->region_set == 0)
    {
-      png_ptr->transformed_pixel_depth = row_info.pixel_depth;
-      if (row_info.pixel_depth > png_ptr->maximum_pixel_depth)
-         png_error(png_ptr, "sequential row overflow");
-   }
+      if (png_ptr->transformed_pixel_depth == 0)
+      {
+         png_ptr->transformed_pixel_depth = row_info.pixel_depth;
+         if (row_info.pixel_depth > png_ptr->maximum_pixel_depth)
+            png_error(png_ptr, "sequential row overflow");
+      }
 
-   else if (png_ptr->transformed_pixel_depth != row_info.pixel_depth)
-      png_error(png_ptr, "internal sequential row size calculation error");
+      else if (png_ptr->transformed_pixel_depth != row_info.pixel_depth)
+         png_error(png_ptr, "internal sequential row size calculation error");
+   }
 
 #ifdef PNG_READ_INTERLACING_SUPPORTED
    /* Expand interlaced rows to full size */
@@ -603,7 +680,18 @@ png_read_row(png_structrp png_ptr, png_bytep row, png_bytep dsp_row)
 #endif
    {
       if (row != NULL)
-         png_combine_row(png_ptr, row, -1/*ignored*/);
+      {
+         if (png_ptr->region_set != 0)
+            /* Deliver only the columns inside the region; row_buf+1 holds
+             * the full transformed row.
+             */
+            png_region_copy_span(row, png_ptr->row_buf + 1,
+                (size_t)png_ptr->region_x * row_info.pixel_depth,
+                (size_t)png_ptr->region_width * row_info.pixel_depth);
+
+         else
+            png_combine_row(png_ptr, row, -1/*ignored*/);
+      }
 
       if (dsp_row != NULL)
          png_combine_row(png_ptr, dsp_row, -1/*ignored*/);
@@ -684,6 +772,108 @@ png_read_rows(png_structrp png_ptr, png_bytepp row,
 #endif /* SEQUENTIAL_READ */
 
 #ifdef PNG_SEQUENTIAL_READ_SUPPORTED
+/* Read only the rows and columns set with png_set_read_region().  The
+ * 'image' array holds region-height pointers to region-width rows.
+ */
+static void
+png_read_region_image(png_structrp png_ptr, png_bytepp image, int pass)
+{
+   png_uint_32 region_y = png_ptr->region_y;
+   png_uint_32 region_height = png_ptr->region_height;
+   png_uint_32 image_height = png_ptr->height;
+   png_uint_32 remaining; /* region rows not yet fully delivered */
+   png_uint_32 i;
+
+   png_debug(1, "in png_read_region_image");
+
+   if (png_ptr->region_width == 0 || region_height == 0)
+      return; /* empty region: nothing to deliver */
+
+#ifdef PNG_READ_INTERLACING_SUPPORTED
+   if (png_ptr->interlaced != 0 &&
+       (png_ptr->transformations & PNG_INTERLACE) != 0)
+   {
+      /* Interlaced pixels of a row arrive spread over several passes at
+       * their final column positions, so accumulate into full-width rows
+       * and crop to the region columns at the end.  Memory is still
+       * bounded by the rows intersecting the region.
+       */
+      size_t rowbytes = PNG_ROWBYTES(png_ptr->maximum_pixel_depth,
+          png_ptr->width);
+      png_bytepp rows;
+      png_bytep data;
+      int j;
+
+      if (rowbytes == 0 ||
+          (png_alloc_size_t)region_height > PNG_SIZE_MAX / rowbytes ||
+          region_height > PNG_SIZE_MAX / (sizeof *rows))
+         png_error(png_ptr, "region is too large");
+
+      data = png_malloc(png_ptr, (png_alloc_size_t)rowbytes * region_height);
+      png_ptr->region_row_data = data;
+      rows = png_malloc(png_ptr, (png_alloc_size_t)region_height *
+          (sizeof *rows));
+      png_ptr->region_rows = rows;
+
+      memset(data, 0, (size_t)rowbytes * region_height);
+      for (i = 0; i < region_height; ++i)
+         rows[i] = data + (size_t)i * rowbytes;
+
+      remaining = region_height;
+      for (j = 0; j < pass && remaining > 0; ++j)
+      {
+         for (i = 0; i < image_height; ++i)
+         {
+            if (i >= region_y && i - region_y < region_height)
+            {
+               png_read_row(png_ptr, rows[i - region_y], NULL);
+
+               /* A row is complete after its last pass: pass index 5 for
+                * even rows, pass index 6 for odd rows.  Once every region
+                * row is complete the remaining passes are skipped entirely.
+                */
+               if (j == ((i & 1) != 0 ? 6 : 5) && --remaining == 0)
+                  break;
+            }
+
+            else
+               png_read_row(png_ptr, NULL, NULL);
+         }
+      }
+
+      /* Crop the accumulated rows to the region columns. */
+      for (i = 0; i < region_height; ++i)
+         png_region_copy_span(image[i], rows[i],
+             (size_t)png_ptr->region_x * png_ptr->transformed_pixel_depth,
+             (size_t)png_ptr->region_width * png_ptr->transformed_pixel_depth);
+
+      png_free(png_ptr, png_ptr->region_rows);
+      png_ptr->region_rows = NULL;
+      png_free(png_ptr, png_ptr->region_row_data);
+      png_ptr->region_row_data = NULL;
+      return;
+   }
+#else
+   (void)pass;
+#endif
+
+   /* Non-interlaced: rows above the region are decoded and discarded (the
+    * unfiltering chain needs them); rows below the region are never read.
+    */
+   remaining = region_height;
+   for (i = 0; i < image_height && remaining > 0; ++i)
+   {
+      if (i >= region_y)
+      {
+         png_read_row(png_ptr, image[i - region_y], NULL);
+         --remaining;
+      }
+
+      else
+         png_read_row(png_ptr, NULL, NULL);
+   }
+}
+
 /* Read the entire image.  If the image has an alpha channel or a tRNS
  * chunk, and you have called png_handle_alpha()[*], you will need to
  * initialize the image to the current image that PNG will be overlaying.
@@ -744,6 +934,12 @@ png_read_image(png_structrp png_ptr, png_bytepp image)
 #endif
 
    image_height=png_ptr->height;
+
+   if (png_ptr->region_set != 0)
+   {
+      png_read_region_image(png_ptr, image, pass);
+      return;
+   }
 
    for (j = 0; j < pass; j++)
    {
@@ -951,6 +1147,13 @@ png_read_destroy(png_structrp png_ptr)
    png_ptr->big_prev_row = NULL;
    png_free(png_ptr, png_ptr->read_buffer);
    png_ptr->read_buffer = NULL;
+
+#ifdef PNG_SEQUENTIAL_READ_SUPPORTED
+   png_free(png_ptr, png_ptr->region_rows);
+   png_ptr->region_rows = NULL;
+   png_free(png_ptr, png_ptr->region_row_data);
+   png_ptr->region_row_data = NULL;
+#endif
 
 #ifdef PNG_READ_QUANTIZE_SUPPORTED
    png_free(png_ptr, png_ptr->palette_lookup);

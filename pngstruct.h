@@ -234,6 +234,17 @@ struct png_struct_def
 #endif
    size_t info_rowbytes;      /* Added in 1.5.4: cache of updated row bytes */
 
+#ifdef PNG_SEQUENTIAL_READ_SUPPORTED
+   /* Region-of-interest reading (png_set_read_region): */
+   png_uint_32 region_x;      /* region origin, clipped to image bounds */
+   png_uint_32 region_y;
+   png_uint_32 region_width;  /* region size after clipping; 0 when the */
+   png_uint_32 region_height; /* region is empty or not set */
+   png_byte region_set;       /* png_set_read_region() was called */
+   png_bytepp region_rows;    /* interlace accumulation row pointers */
+   png_bytep region_row_data; /* interlace accumulation data block */
+#endif
+
    png_uint_32 idat_size;     /* current IDAT size for read */
    png_uint_32 crc;           /* current chunk CRC value */
    png_colorp palette;        /* palette from the input file */
