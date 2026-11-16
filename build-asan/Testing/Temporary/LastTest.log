@@ -1,0 +1,855 @@
+Start testing: Nov 17 01:55 CST
+----------------------------------------------------------
+19/32 Testing: pngstest-linear-alpha
+19/32 Test: pngstest-linear-alpha
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngstest" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngstest-linear-alpha.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngstest-linear-alpha" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngstest --tmpfile linear-alpha- --log /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-16-linear.png /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-8-linear.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-16-linear.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-8-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-16-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-8-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-16-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-8-linear.png
+<end of output>
+Test time =   3.46 sec
+----------------------------------------------------------
+Test Passed.
+"pngstest-linear-alpha" end time: Nov 17 01:55 CST
+"pngstest-linear-alpha" time elapsed: 00:00:03
+----------------------------------------------------------
+
+17/32 Testing: pngstest-1.8-alpha
+17/32 Test: pngstest-1.8-alpha
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngstest" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngstest-1.8-alpha.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngstest-1.8-alpha" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngstest --tmpfile 1.8-alpha- --log /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-16-1.8.png /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-8-1.8.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-16-1.8.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-8-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-16-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-8-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-16-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-8-1.8.png
+<end of output>
+Test time =   3.54 sec
+----------------------------------------------------------
+Test Passed.
+"pngstest-1.8-alpha" end time: Nov 17 01:55 CST
+"pngstest-1.8-alpha" time elapsed: 00:00:03
+----------------------------------------------------------
+
+21/32 Testing: pngstest-none-alpha
+21/32 Test: pngstest-none-alpha
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngstest" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngstest-none-alpha.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngstest-none-alpha" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngstest --tmpfile none-alpha- --log /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-16.png /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-8.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-16.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-16.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-16.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-8.png
+<end of output>
+Test time =   3.56 sec
+----------------------------------------------------------
+Test Passed.
+"pngstest-none-alpha" end time: Nov 17 01:55 CST
+"pngstest-none-alpha" time elapsed: 00:00:03
+----------------------------------------------------------
+
+18/32 Testing: pngstest-linear-none
+18/32 Test: pngstest-linear-none
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngstest" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngstest-linear-none.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngstest-linear-none" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngstest --tmpfile linear-none- --log /home/cat/gsb/uid4019/contrib/testpngs/gray-1-linear-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-1-linear.png /home/cat/gsb/uid4019/contrib/testpngs/gray-16-linear-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-16-linear.png /home/cat/gsb/uid4019/contrib/testpngs/gray-2-linear-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-2-linear.png /home/cat/gsb/uid4019/contrib/testpngs/gray-4-linear-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-4-linear.png /home/cat/gsb/uid4019/contrib/testpngs/gray-8-linear-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-8-linear.png /home/cat/gsb/uid4019/contrib/testpngs/palette-1-linear-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-1-linear.png /home/cat/gsb/uid4019/contrib/testpngs/palette-2-linear-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-2-linear.png /home/cat/gsb/uid4019/contrib/testpngs/palette-4-linear-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-4-linear.png /home/cat/gsb/uid4019/contrib/testpngs/palette-8-linear-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-8-linear.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-linear-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-linear.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-linear-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-1-linear-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-1-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-16-linear-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-16-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-2-linear-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-2-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-4-linear-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-4-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-8-linear-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-8-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-1-linear-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-1-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-2-linear-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-2-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-4-linear-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-4-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-8-linear-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-8-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-linear-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-linear.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-linear-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-linear.png
+<end of output>
+Test time =   4.26 sec
+----------------------------------------------------------
+Test Passed.
+"pngstest-linear-none" end time: Nov 17 01:55 CST
+"pngstest-linear-none" time elapsed: 00:00:04
+----------------------------------------------------------
+
+22/32 Testing: pngstest-sRGB-none
+22/32 Test: pngstest-sRGB-none
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngstest" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngstest-sRGB-none.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngstest-sRGB-none" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngstest --tmpfile sRGB-none- --log /home/cat/gsb/uid4019/contrib/testpngs/gray-1-sRGB-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-1-sRGB.png /home/cat/gsb/uid4019/contrib/testpngs/gray-16-sRGB-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-16-sRGB.png /home/cat/gsb/uid4019/contrib/testpngs/gray-2-sRGB-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-2-sRGB.png /home/cat/gsb/uid4019/contrib/testpngs/gray-4-sRGB-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-4-sRGB.png /home/cat/gsb/uid4019/contrib/testpngs/gray-8-sRGB-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-8-sRGB.png /home/cat/gsb/uid4019/contrib/testpngs/palette-1-sRGB-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-1-sRGB.png /home/cat/gsb/uid4019/contrib/testpngs/palette-2-sRGB-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-2-sRGB.png /home/cat/gsb/uid4019/contrib/testpngs/palette-4-sRGB-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-4-sRGB.png /home/cat/gsb/uid4019/contrib/testpngs/palette-8-sRGB-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-8-sRGB.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-sRGB-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-sRGB.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-sRGB-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-1-sRGB-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-1-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-16-sRGB-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-16-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-2-sRGB-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-2-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-4-sRGB-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-4-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-8-sRGB-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-8-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-1-sRGB-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-1-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-2-sRGB-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-2-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-4-sRGB-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-4-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-8-sRGB-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-8-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-sRGB-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-sRGB-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-sRGB.png
+<end of output>
+Test time =   4.56 sec
+----------------------------------------------------------
+Test Passed.
+"pngstest-sRGB-none" end time: Nov 17 01:55 CST
+"pngstest-sRGB-none" time elapsed: 00:00:04
+----------------------------------------------------------
+
+20/32 Testing: pngstest-none-none
+20/32 Test: pngstest-none-none
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngstest" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngstest-none-none.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngstest-none-none" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngstest --tmpfile none-none- --log /home/cat/gsb/uid4019/contrib/testpngs/gray-1-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-1.png /home/cat/gsb/uid4019/contrib/testpngs/gray-16-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-16.png /home/cat/gsb/uid4019/contrib/testpngs/gray-2-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-2.png /home/cat/gsb/uid4019/contrib/testpngs/gray-4-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-4.png /home/cat/gsb/uid4019/contrib/testpngs/gray-8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-8.png /home/cat/gsb/uid4019/contrib/testpngs/palette-1-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-1.png /home/cat/gsb/uid4019/contrib/testpngs/palette-2-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-2.png /home/cat/gsb/uid4019/contrib/testpngs/palette-4-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-4.png /home/cat/gsb/uid4019/contrib/testpngs/palette-8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-8.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-16.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-1-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-1.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-16-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-16.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-2-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-2.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-4-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-4.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-1-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-1.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-2-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-2.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-4-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-4.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-16.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-8.png
+<end of output>
+Test time =   4.57 sec
+----------------------------------------------------------
+Test Passed.
+"pngstest-none-none" end time: Nov 17 01:55 CST
+"pngstest-none-none" time elapsed: 00:00:04
+----------------------------------------------------------
+
+16/32 Testing: pngstest-1.8-none
+16/32 Test: pngstest-1.8-none
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngstest" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngstest-1.8-none.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngstest-1.8-none" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngstest --tmpfile 1.8-none- --log /home/cat/gsb/uid4019/contrib/testpngs/gray-1-1.8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-1-1.8.png /home/cat/gsb/uid4019/contrib/testpngs/gray-16-1.8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-16-1.8.png /home/cat/gsb/uid4019/contrib/testpngs/gray-2-1.8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-2-1.8.png /home/cat/gsb/uid4019/contrib/testpngs/gray-4-1.8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-4-1.8.png /home/cat/gsb/uid4019/contrib/testpngs/gray-8-1.8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/gray-8-1.8.png /home/cat/gsb/uid4019/contrib/testpngs/palette-1-1.8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-1-1.8.png /home/cat/gsb/uid4019/contrib/testpngs/palette-2-1.8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-2-1.8.png /home/cat/gsb/uid4019/contrib/testpngs/palette-4-1.8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-4-1.8.png /home/cat/gsb/uid4019/contrib/testpngs/palette-8-1.8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/palette-8-1.8.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-1.8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-1.8.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-1.8-tRNS.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-1-1.8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-1-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-16-1.8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-16-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-2-1.8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-2-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-4-1.8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-4-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-8-1.8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-8-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-1-1.8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-1-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-2-1.8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-2-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-4-1.8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-4-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-8-1.8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/palette-8-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-1.8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-16-1.8.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-1.8-tRNS.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-8-1.8.png
+<end of output>
+Test time =   4.66 sec
+----------------------------------------------------------
+Test Passed.
+"pngstest-1.8-none" end time: Nov 17 01:55 CST
+"pngstest-1.8-none" time elapsed: 00:00:04
+----------------------------------------------------------
+
+6/32 Testing: pngvalid-gamma-expand16-background
+6/32 Test: pngvalid-gamma-expand16-background
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-gamma-expand16-background.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-gamma-expand16-background" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --gamma-background --expand16
+
+Gamma correction with background:
+  8 bit gray:  3204.23995
+  8 bit color: 4952.57352
+ 16 bit gray:  1.29983
+ 16 bit color: 93.83902
+PASS: pngvalid --gamma-background --expand16 (floating point arithmetic)
+<end of output>
+Test time =   1.00 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-gamma-expand16-background" end time: Nov 17 01:55 CST
+"pngvalid-gamma-expand16-background" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/32 Testing: pngvalid-gamma-expand16-alpha-mode
+5/32 Test: pngvalid-gamma-expand16-alpha-mode
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-gamma-expand16-alpha-mode.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-gamma-expand16-alpha-mode" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --gamma-alpha-mode --expand16
+
+Gamma correction with alpha mode:
+  8 bit gray:  4493.00481
+  8 bit color: 4493.00481
+ 16 bit gray:  309.24044
+ 16 bit color: 310.97330
+PASS: pngvalid --gamma-alpha-mode --expand16 (floating point arithmetic)
+<end of output>
+Test time =   2.41 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-gamma-expand16-alpha-mode" end time: Nov 17 01:55 CST
+"pngvalid-gamma-expand16-alpha-mode" time elapsed: 00:00:02
+----------------------------------------------------------
+
+3/32 Testing: pngvalid-gamma-alpha-mode
+3/32 Test: pngvalid-gamma-alpha-mode
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-gamma-alpha-mode.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-gamma-alpha-mode" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --gamma-alpha-mode
+
+Gamma correction with alpha mode:
+  8 bit gray:  17.48251
+  8 bit color: 17.48251
+ 16 bit gray:  309.24044
+ 16 bit color: 310.97330
+PASS: pngvalid --gamma-alpha-mode (floating point arithmetic)
+<end of output>
+Test time =   2.48 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-gamma-alpha-mode" end time: Nov 17 01:55 CST
+"pngvalid-gamma-alpha-mode" time elapsed: 00:00:02
+----------------------------------------------------------
+
+9/32 Testing: pngvalid-gamma-threshold
+9/32 Test: pngvalid-gamma-threshold
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-gamma-threshold.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-gamma-threshold" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --gamma-threshold
+PASS: pngvalid --gamma-threshold (floating point arithmetic)
+<end of output>
+Test time =   0.77 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-gamma-threshold" end time: Nov 17 01:55 CST
+"pngvalid-gamma-threshold" time elapsed: 00:00:00
+----------------------------------------------------------
+
+15/32 Testing: pngvalid-transform
+15/32 Test: pngvalid-transform
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-transform.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-transform" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --transform
+PASS: pngvalid --transform (floating point arithmetic)
+<end of output>
+Test time =   2.27 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-transform" end time: Nov 17 01:55 CST
+"pngvalid-transform" time elapsed: 00:00:02
+----------------------------------------------------------
+
+12/32 Testing: pngvalid-progressive-size
+12/32 Test: pngvalid-progressive-size
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-progressive-size.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-progressive-size" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --size --progressive-read
+PASS: pngvalid --size --progressive-read (floating point arithmetic)
+<end of output>
+Test time =   1.97 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-progressive-size" end time: Nov 17 01:55 CST
+"pngvalid-progressive-size" time elapsed: 00:00:01
+----------------------------------------------------------
+
+8/32 Testing: pngvalid-gamma-sbit
+8/32 Test: pngvalid-gamma-sbit
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-gamma-sbit.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-gamma-sbit" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --gamma-sbit
+
+Gamma correction with sBIT:
+ 16 bit gray:  0.74058
+ 16 bit color: 0.74058
+PASS: pngvalid --gamma-sbit (floating point arithmetic)
+<end of output>
+Test time =   2.06 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-gamma-sbit" end time: Nov 17 01:55 CST
+"pngvalid-gamma-sbit" time elapsed: 00:00:02
+----------------------------------------------------------
+
+7/32 Testing: pngvalid-gamma-expand16-transform
+7/32 Test: pngvalid-gamma-expand16-transform
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-gamma-expand16-transform.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-gamma-expand16-transform" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --gamma-transform --expand16
+Gamma correction error summary
+
+The printed value is the maximum error in the pixel values
+calculated by the libpng gamma correction code.  The error
+is calculated as the difference between the output pixel
+value (always an integer) and the ideal value from the
+libpng specification (typically not an integer).
+
+Expect this value to be less than .5 for 8 bit formats,
+less than 1 for formats with fewer than 8 bits and a small
+number (typically less than 5) for the 16 bit formats.
+For performance reasons the value for 16 bit formats
+increases when the image file includes an sBIT chunk.
+
+Basic gamma correction:
+  2 bit gray:  127.07023
+  4 bit gray:  127.07023
+  8 bit gray:  128.32752
+  8 bit color: 128.32752
+  indexed:     128.32752
+ 16 bit gray:  0.74080
+ 16 bit color: 0.74080
+PASS: pngvalid --gamma-transform --expand16 (floating point arithmetic)
+<end of output>
+Test time =   0.70 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-gamma-expand16-transform" end time: Nov 17 01:55 CST
+"pngvalid-gamma-expand16-transform" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/32 Testing: pngvalid-gamma-background
+4/32 Test: pngvalid-gamma-background
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-gamma-background.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-gamma-background" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --gamma-background
+
+Gamma correction with background:
+  8 bit gray:  13.81700
+  8 bit color: 19.16293
+ 16 bit gray:  1.54228
+ 16 bit color: 57.89386
+PASS: pngvalid --gamma-background (floating point arithmetic)
+<end of output>
+Test time =   0.84 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-gamma-background" end time: Nov 17 01:55 CST
+"pngvalid-gamma-background" time elapsed: 00:00:00
+----------------------------------------------------------
+
+31/32 Testing: pngimage-quick
+31/32 Test: pngimage-quick
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngimage" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngimage-quick.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngimage-quick" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngimage --list-combos --log /home/cat/gsb/uid4019/contrib/pngsuite/basn0g01.png /home/cat/gsb/uid4019/contrib/pngsuite/basn0g02.png /home/cat/gsb/uid4019/contrib/pngsuite/basn0g04.png /home/cat/gsb/uid4019/contrib/pngsuite/basn0g08.png /home/cat/gsb/uid4019/contrib/pngsuite/basn0g16.png /home/cat/gsb/uid4019/contrib/pngsuite/basn2c08.png /home/cat/gsb/uid4019/contrib/pngsuite/basn2c16.png /home/cat/gsb/uid4019/contrib/pngsuite/basn3p01.png /home/cat/gsb/uid4019/contrib/pngsuite/basn3p02.png /home/cat/gsb/uid4019/contrib/pngsuite/basn3p04.png /home/cat/gsb/uid4019/contrib/pngsuite/basn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/basn4a08.png /home/cat/gsb/uid4019/contrib/pngsuite/basn4a16.png /home/cat/gsb/uid4019/contrib/pngsuite/basn6a08.png /home/cat/gsb/uid4019/contrib/pngsuite/basn6a16.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn0g01.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn0g02.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn0g04.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn2c16.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbgn2c16.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbgn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbrn2c08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbwn0g16.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbwn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbyn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftp0n0g08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftp0n2c08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftp0n3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftp1n3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn0g08.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn0g16.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn2c08.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn2c16.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn4a08.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn4a16.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn6a08.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn6a16.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbbn2c16.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbbn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbgn2c16.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbgn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbrn2c08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbwn0g16.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbwn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbyn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftp0n0g08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftp0n2c08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftp0n3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftp1n3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn0g01.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn0g02.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn0g04.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn0g08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn0g16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn2c08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn2c16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn3p01.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn3p02.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn3p04.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn4a08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn4a16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn6a08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn6a16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn0g01.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn0g02.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn0g04.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn2c16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbgn2c16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbgn3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbrn2c08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbwn0g16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbwn3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbyn3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftp0n0g08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftp0n2c08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftp0n3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftp1n3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn0g08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn0g16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn2c08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn2c16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn4a08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn4a16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn6a08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn6a16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbbn2c16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbbn3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbgn2c16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbgn3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbrn2c08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbwn0g16.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbwn3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbyn3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftp0n0g08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftp0n2c08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftp0n3p08.png
+PASS: pngimage --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftp1n3p08.png
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Passed.
+"pngimage-quick" end time: Nov 17 01:55 CST
+"pngimage-quick" time elapsed: 00:00:00
+----------------------------------------------------------
+
+1/32 Testing: pngtest
+1/32 Test: pngtest
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngtest" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngtest.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngtest" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngtest /home/cat/gsb/uid4019/pngtest.png
+
+ Testing libpng version 1.6.38.git
+   with zlib   version 1.3.1
+
+libpng version 1.6.38.git
+Copyright (c) 2018-2020 Cosmin Truta
+Copyright (c) 1998-2002,2004,2006-2018 Glenn Randers-Pehrson
+Copyright (c) 1996-1997 Andreas Dilger
+Copyright (c) 1995-1996 Guy Eric Schalnat, Group 42, Inc.
+ library (10638): libpng version 1.6.38.git
+
+ pngtest (10638): libpng version 1.6.38.git
+
+ Testing /home/cat/gsb/uid4019/pngtest.png: eXIf type MM, 52 bytes
+
+Files /home/cat/gsb/uid4019/pngtest.png and pngout.png are of a different size
+   Was /home/cat/gsb/uid4019/pngtest.png written with the same maximum IDAT chunk size (8192 bytes),
+   filtering heuristic (libpng default), compression level (zlib default),
+   and zlib version (1.3.1)?
+
+
+ Pass 0: rwrwrwrwrwrwrwrwrw
+ Pass 1: rwrwrwrwrwrwrwrwrw
+ Pass 2: rwrwrwrwrwrwrwrw
+ Pass 3: rwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrw
+ Pass 4: rwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrw
+ Pass 5: rwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrw
+         rwrwrwrw
+ Pass 6: rwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrwrw
+         rwrwrwrwrw eXIf type MM, 52 bytes
+
+Files /home/cat/gsb/uid4019/pngtest.png and pngout.png are of a different size
+ eXIf type MM, 52 bytes
+
+Files /home/cat/gsb/uid4019/pngtest.png and pngout.png are of a different size
+
+ PASS (9782 zero samples)
+ tIME = 7 Jun 1996 17:58:08 +0000
+ libpng passes test
+ Default limits:
+  width_max  = 1000000
+  height_max = 1000000
+  cache_max  = 1000
+  malloc_max = 8000000
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"pngtest" end time: Nov 17 01:55 CST
+"pngtest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+25/32 Testing: pngunknown-IDAT
+25/32 Test: pngunknown-IDAT
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngunknown" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngunknown-IDAT.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngunknown-IDAT" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngunknown --strict default=discard IDAT=save /home/cat/gsb/uid4019/pngtest.png
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"pngunknown-IDAT" end time: Nov 17 01:55 CST
+"pngunknown-IDAT" time elapsed: 00:00:00
+----------------------------------------------------------
+
+30/32 Testing: pngunknown-vpAg
+30/32 Test: pngunknown-vpAg
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngunknown" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngunknown-vpAg.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngunknown-vpAg" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngunknown --strict vpAg=if-safe /home/cat/gsb/uid4019/pngtest.png
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"pngunknown-vpAg" end time: Nov 17 01:55 CST
+"pngunknown-vpAg" time elapsed: 00:00:00
+----------------------------------------------------------
+
+24/32 Testing: pngunknown-discard
+24/32 Test: pngunknown-discard
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngunknown" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngunknown-discard.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngunknown-discard" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngunknown --strict default=discard /home/cat/gsb/uid4019/pngtest.png
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"pngunknown-discard" end time: Nov 17 01:55 CST
+"pngunknown-discard" time elapsed: 00:00:00
+----------------------------------------------------------
+
+28/32 Testing: pngunknown-save
+28/32 Test: pngunknown-save
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngunknown" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngunknown-save.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngunknown-save" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngunknown --strict default=save /home/cat/gsb/uid4019/pngtest.png
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"pngunknown-save" end time: Nov 17 01:55 CST
+"pngunknown-save" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/32 Testing: pngvalid-gamma-transform
+10/32 Test: pngvalid-gamma-transform
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-gamma-transform.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-gamma-transform" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --gamma-transform
+Gamma correction error summary
+
+The printed value is the maximum error in the pixel values
+calculated by the libpng gamma correction code.  The error
+is calculated as the difference between the output pixel
+value (always an integer) and the ideal value from the
+libpng specification (typically not an integer).
+
+Expect this value to be less than .5 for 8 bit formats,
+less than 1 for formats with fewer than 8 bits and a small
+number (typically less than 5) for the 16 bit formats.
+For performance reasons the value for 16 bit formats
+increases when the image file includes an sBIT chunk.
+
+Basic gamma correction:
+  2 bit gray:  0.50495
+  4 bit gray:  0.81888
+  8 bit gray:  0.49933
+  8 bit color: 0.49933
+  indexed:     0.00000
+ 16 bit gray:  0.74080
+ 16 bit color: 0.74080
+PASS: pngvalid --gamma-transform (floating point arithmetic)
+<end of output>
+Test time =   0.61 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-gamma-transform" end time: Nov 17 01:55 CST
+"pngvalid-gamma-transform" time elapsed: 00:00:00
+----------------------------------------------------------
+
+27/32 Testing: pngunknown-sAPI
+27/32 Test: pngunknown-sAPI
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngunknown" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngunknown-sAPI.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngunknown-sAPI" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngunknown --strict bKGD=save cHRM=save gAMA=save all=discard iCCP=save sBIT=save sRGB=save /home/cat/gsb/uid4019/pngtest.png
+<end of output>
+Test time =   0.03 sec
+----------------------------------------------------------
+Test Passed.
+"pngunknown-sAPI" end time: Nov 17 01:55 CST
+"pngunknown-sAPI" time elapsed: 00:00:00
+----------------------------------------------------------
+
+26/32 Testing: pngunknown-if-safe
+26/32 Test: pngunknown-if-safe
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngunknown" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngunknown-if-safe.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngunknown-if-safe" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngunknown --strict default=if-safe /home/cat/gsb/uid4019/pngtest.png
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"pngunknown-if-safe" end time: Nov 17 01:55 CST
+"pngunknown-if-safe" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/32 Testing: pngvalid-progressive-standard
+13/32 Test: pngvalid-progressive-standard
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-progressive-standard.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-progressive-standard" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --standard --progressive-read
+PASS: pngvalid --standard --progressive-read (floating point arithmetic)
+<end of output>
+Test time =   0.54 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-progressive-standard" end time: Nov 17 01:55 CST
+"pngvalid-progressive-standard" time elapsed: 00:00:00
+----------------------------------------------------------
+
+29/32 Testing: pngunknown-sTER
+29/32 Test: pngunknown-sTER
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngunknown" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngunknown-sTER.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngunknown-sTER" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngunknown --strict sTER=if-safe /home/cat/gsb/uid4019/pngtest.png
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"pngunknown-sTER" end time: Nov 17 01:55 CST
+"pngunknown-sTER" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/32 Testing: pngvalid-progressive-interlace-standard
+11/32 Test: pngvalid-progressive-interlace-standard
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-progressive-interlace-standard.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-progressive-interlace-standard" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --standard --progressive-read --interlace
+PASS: pngvalid --standard --progressive-read --interlace (floating point arithmetic)
+<end of output>
+Test time =   0.58 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-progressive-interlace-standard" end time: Nov 17 01:55 CST
+"pngvalid-progressive-interlace-standard" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/32 Testing: pngvalid-standard
+14/32 Test: pngvalid-standard
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-standard.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-standard" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --standard
+PASS: pngvalid --standard (floating point arithmetic)
+<end of output>
+Test time =   0.56 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-standard" end time: Nov 17 01:55 CST
+"pngvalid-standard" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/32 Testing: pngvalid-gamma-16-to-8
+2/32 Test: pngvalid-gamma-16-to-8
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngvalid" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngvalid-gamma-16-to-8.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngvalid-gamma-16-to-8" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngvalid --gamma-16-to-8
+
+Gamma correction with 16 to 8 bit reduction:
+ 16 bit gray:  1.97052
+ 16 bit color: 1.97052
+PASS: pngvalid --gamma-16-to-8 (floating point arithmetic)
+<end of output>
+Test time =   0.45 sec
+----------------------------------------------------------
+Test Passed.
+"pngvalid-gamma-16-to-8" end time: Nov 17 01:55 CST
+"pngvalid-gamma-16-to-8" time elapsed: 00:00:00
+----------------------------------------------------------
+
+23/32 Testing: pngstest-sRGB-alpha
+23/32 Test: pngstest-sRGB-alpha
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngstest" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngstest-sRGB-alpha.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngstest-sRGB-alpha" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngstest --tmpfile sRGB-alpha- --log /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-16-sRGB.png /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-8-sRGB.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-16-sRGB.png /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-8-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-16-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/gray-alpha-8-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-16-sRGB.png
+PASS: /home/cat/gsb/uid4019/contrib/testpngs/rgb-alpha-8-sRGB.png
+<end of output>
+Test time =   3.95 sec
+----------------------------------------------------------
+Test Passed.
+"pngstest-sRGB-alpha" end time: Nov 17 01:55 CST
+"pngstest-sRGB-alpha" time elapsed: 00:00:03
+----------------------------------------------------------
+
+32/32 Testing: pngimage-full
+32/32 Test: pngimage-full
+Command: "/usr/bin/cmake" "-DLIBPNG=/home/cat/gsb/uid4019/build-asan/libpng16d.so.16.38.git" "-DTEST_COMMAND=/home/cat/gsb/uid4019/build-asan/pngimage" "-P" "/home/cat/gsb/uid4019/build-asan/tests/pngimage-full.cmake"
+Directory: /home/cat/gsb/uid4019/build-asan
+"pngimage-full" start time: Nov 17 01:55 CST
+Output:
+----------------------------------------------------------
+Running /home/cat/gsb/uid4019/build-asan/pngimage --exhaustive --list-combos --log /home/cat/gsb/uid4019/contrib/pngsuite/basn0g01.png /home/cat/gsb/uid4019/contrib/pngsuite/basn0g02.png /home/cat/gsb/uid4019/contrib/pngsuite/basn0g04.png /home/cat/gsb/uid4019/contrib/pngsuite/basn0g08.png /home/cat/gsb/uid4019/contrib/pngsuite/basn0g16.png /home/cat/gsb/uid4019/contrib/pngsuite/basn2c08.png /home/cat/gsb/uid4019/contrib/pngsuite/basn2c16.png /home/cat/gsb/uid4019/contrib/pngsuite/basn3p01.png /home/cat/gsb/uid4019/contrib/pngsuite/basn3p02.png /home/cat/gsb/uid4019/contrib/pngsuite/basn3p04.png /home/cat/gsb/uid4019/contrib/pngsuite/basn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/basn4a08.png /home/cat/gsb/uid4019/contrib/pngsuite/basn4a16.png /home/cat/gsb/uid4019/contrib/pngsuite/basn6a08.png /home/cat/gsb/uid4019/contrib/pngsuite/basn6a16.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn0g01.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn0g02.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn0g04.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn2c16.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbgn2c16.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbgn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbrn2c08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbwn0g16.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbwn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftbyn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftp0n0g08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftp0n2c08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftp0n3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ftp1n3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn0g08.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn0g16.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn2c08.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn2c16.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn4a08.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn4a16.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn6a08.png /home/cat/gsb/uid4019/contrib/pngsuite/ibasn6a16.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbbn2c16.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbbn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbgn2c16.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbgn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbrn2c08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbwn0g16.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbwn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftbyn3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftp0n0g08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftp0n2c08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftp0n3p08.png /home/cat/gsb/uid4019/contrib/pngsuite/iftp1n3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn0g01.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn0g02.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn0g04.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn0g08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn0g16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn2c08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn2c16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn3p01.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn3p02.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn3p04.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn4a08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn4a16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn6a08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/basn6a16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn0g01.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn0g02.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn0g04.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn2c16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbbn3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbgn2c16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbgn3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbrn2c08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbwn0g16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbwn3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftbyn3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftp0n0g08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftp0n2c08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftp0n3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ftp1n3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn0g08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn0g16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn2c08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn2c16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn4a08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn4a16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn6a08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/ibasn6a16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbbn2c16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbbn3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbgn2c16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbgn3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbrn2c08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbwn0g16.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbwn3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftbyn3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftp0n0g08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftp0n2c08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftp0n3p08.png
+PASS: pngimage --exhaustive --list-combos /home/cat/gsb/uid4019/contrib/pngsuite/iftp1n3p08.png
+<end of output>
+Test time =  40.99 sec
+----------------------------------------------------------
+Test Passed.
+"pngimage-full" end time: Nov 17 01:56 CST
+"pngimage-full" time elapsed: 00:00:40
+----------------------------------------------------------
+
+End testing: Nov 17 01:56 CST

@@ -466,6 +466,19 @@ struct png_struct_def
 #endif
 #ifdef PNG_SEQUENTIAL_READ_SUPPORTED
   uInt             IDAT_read_size;   /* limit on read buffer size for IDAT */
+  png_bytep        idat_buf;         /* batched IDAT output buffer */
+  png_alloc_size_t idat_buf_size;    /* size of the batched output buffer */
+  png_alloc_size_t idat_buf_avail;   /* bytes remaining in idat_buf */
+  png_bytep        idat_buf_next;    /* next unread row in idat_buf */
+  png_bytep        idat_compressed;  /* gathered IDAT data */
+  png_bytep        prev_row_base;    /* original prev_row for batch reuse */
+  int              idat_no_copy;     /* rows need no transform copy */
+  int              idat_prev_in_batch; /* prev_row points into idat_buf */
+  int              idat_libdeflate;  /* whole image decoded with libdeflate */
+  int              idat_decoded;     /* batched IDAT has been decoded */
+  int              idat_expand;      /* transform expands into row_buf */
+  int              pending_chunk_header; /* header read for png_read_end */
+  png_uint_32      pending_chunk_length;
 #endif
 
 #ifdef PNG_IO_STATE_SUPPORTED

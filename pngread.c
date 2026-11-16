@@ -383,6 +383,7 @@ void PNGAPI
 png_read_row(png_structrp png_ptr, png_bytep row, png_bytep dsp_row)
 {
    png_row_info row_info;
+   png_bytep saved_row_buf;
 
    if (png_ptr == NULL)
       return;
@@ -403,6 +404,7 @@ png_read_row(png_structrp png_ptr, png_bytep row, png_bytep dsp_row)
    row_info.channels = png_ptr->channels;
    row_info.pixel_depth = png_ptr->pixel_depth;
    row_info.rowbytes = PNG_ROWBYTES(row_info.pixel_depth, row_info.width);
+   saved_row_buf = png_ptr->row_buf;
 
 #ifdef PNG_WARNINGS_SUPPORTED
    if (png_ptr->row_number == 0 && png_ptr->pass == 0)
@@ -539,9 +541,65 @@ png_read_row(png_structrp png_ptr, png_bytep row, png_bytep dsp_row)
       png_error(png_ptr, "Invalid attempt to read row data");
 
    /* Fill the row with IDAT data: */
-   png_ptr->row_buf[0]=255; /* to force error if no data was found */
-   png_read_IDAT_data(png_ptr, png_ptr->row_buf, row_info.rowbytes + 1);
+   if (png_ptr->idat_buf != NULL)
+   {
+      png_alloc_size_t stride = (png_alloc_size_t)row_info.rowbytes + 1;
 
+      if (png_ptr->idat_buf_avail == 0)
+      {
+         if (png_ptr->idat_libdeflate != 0)
+         {
+#ifdef PNG_USE_LIBDEFLATE
+            if (png_ptr->idat_decoded != 0)
+               png_error(png_ptr, "internal IDAT batch state error");
+
+            png_read_IDAT_libdeflate(png_ptr, png_ptr->idat_buf,
+                png_ptr->idat_buf_size);
+            png_ptr->idat_decoded = 1;
+            png_ptr->idat_buf_next = png_ptr->idat_buf;
+            png_ptr->idat_buf_avail = png_ptr->idat_buf_size;
+#else
+            png_error(png_ptr, "internal IDAT decoder state error");
+#endif
+         }
+
+         else
+         {
+            png_alloc_size_t remaining =
+                ((png_alloc_size_t)png_ptr->height - png_ptr->row_number) *
+                stride;
+            png_alloc_size_t request = png_ptr->idat_buf_size;
+
+            if (request > remaining)
+               request = remaining;
+
+            if (png_ptr->idat_prev_in_batch != 0)
+            {
+               memcpy(png_ptr->prev_row_base, png_ptr->prev_row, stride);
+               png_ptr->prev_row = png_ptr->prev_row_base;
+               png_ptr->idat_prev_in_batch = 0;
+            }
+
+            png_read_IDAT_data(png_ptr, png_ptr->idat_buf, request);
+            png_ptr->idat_buf_next = png_ptr->idat_buf;
+            png_ptr->idat_buf_avail = request;
+         }
+      }
+
+      if (png_ptr->idat_buf_avail < stride)
+         png_error(png_ptr, "internal IDAT batch size error");
+
+      png_ptr->row_buf = png_ptr->idat_buf_next;
+      png_ptr->idat_buf_next += stride;
+      png_ptr->idat_buf_avail -= stride;
+   }
+
+   else
+   {
+      png_ptr->row_buf = saved_row_buf;
+      png_ptr->row_buf[0]=255; /* to force error if no data was found */
+      png_read_IDAT_data(png_ptr, png_ptr->row_buf, row_info.rowbytes + 1);
+   }
    if (png_ptr->row_buf[0] > PNG_FILTER_VALUE_NONE)
    {
       if (png_ptr->row_buf[0] < PNG_FILTER_VALUE_LAST)
@@ -556,7 +614,22 @@ png_read_row(png_structrp png_ptr, png_bytep row, png_bytep dsp_row)
     * it may not be in the future, so this was changed just to copy the
     * interlaced count:
     */
-   memcpy(png_ptr->prev_row, png_ptr->row_buf, row_info.rowbytes + 1);
+   if (png_ptr->idat_expand != 0)
+   {
+      png_ptr->prev_row = png_ptr->row_buf;
+      png_ptr->idat_prev_in_batch = 1;
+      memcpy(saved_row_buf, png_ptr->row_buf, row_info.rowbytes + 1);
+      png_ptr->row_buf = saved_row_buf;
+   }
+
+   else if (png_ptr->idat_no_copy != 0)
+   {
+      png_ptr->prev_row = png_ptr->row_buf;
+      png_ptr->idat_prev_in_batch = 1;
+   }
+
+   else
+      memcpy(png_ptr->prev_row, png_ptr->row_buf, row_info.rowbytes + 1);
 
 #ifdef PNG_MNG_FEATURES_SUPPORTED
    if ((png_ptr->mng_features_permitted & PNG_FLAG_MNG_FILTER_64) != 0 &&
@@ -608,6 +681,7 @@ png_read_row(png_structrp png_ptr, png_bytep row, png_bytep dsp_row)
       if (dsp_row != NULL)
          png_combine_row(png_ptr, dsp_row, -1/*ignored*/);
    }
+   png_ptr->row_buf = saved_row_buf;
    png_read_finish_row(png_ptr);
 
    if (png_ptr->read_row_fn != NULL)
@@ -791,8 +865,19 @@ png_read_end(png_structrp png_ptr, png_inforp info_ptr)
 
    do
    {
-      png_uint_32 length = png_read_chunk_header(png_ptr);
-      png_uint_32 chunk_name = png_ptr->chunk_name;
+      png_uint_32 length;
+      png_uint_32 chunk_name;
+
+      if (png_ptr->pending_chunk_header != 0)
+      {
+         length = png_ptr->pending_chunk_length;
+         png_ptr->pending_chunk_header = 0;
+      }
+
+      else
+         length = png_read_chunk_header(png_ptr);
+
+      chunk_name = png_ptr->chunk_name;
 
       if (chunk_name != png_IDAT)
          png_ptr->mode |= PNG_HAVE_CHUNK_AFTER_IDAT;
@@ -951,6 +1036,10 @@ png_read_destroy(png_structrp png_ptr)
    png_ptr->big_prev_row = NULL;
    png_free(png_ptr, png_ptr->read_buffer);
    png_ptr->read_buffer = NULL;
+   png_free(png_ptr, png_ptr->idat_buf);
+   png_ptr->idat_buf = NULL;
+   png_free(png_ptr, png_ptr->idat_compressed);
+   png_ptr->idat_compressed = NULL;
 
 #ifdef PNG_READ_QUANTIZE_SUPPORTED
    png_free(png_ptr, png_ptr->palette_lookup);

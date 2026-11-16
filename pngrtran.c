@@ -18,6 +18,13 @@
 
 #include "pngpriv.h"
 
+#if defined(__BYTE_ORDER__) && defined(__ORDER_LITTLE_ENDIAN__) && \
+    __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#  define PNG_READ_LITTLE_ENDIAN 1
+#elif defined(_MSC_VER)
+#  define PNG_READ_LITTLE_ENDIAN 1
+#endif
+
 #ifdef PNG_ARM_NEON_IMPLEMENTATION
 #  if PNG_ARM_NEON_IMPLEMENTATION == 1
 #    define PNG_ARM_NEON_INTRINSICS_AVAILABLE
@@ -2691,6 +2698,20 @@ png_do_read_filler(png_row_infop row_info, png_bytep row,
          if ((flags & PNG_FLAG_FILLER_AFTER) != 0)
          {
             /* This changes the data from G to GX */
+#ifdef PNG_READ_LITTLE_ENDIAN
+            png_bytep sp = row + (size_t)row_width;
+            png_bytep dp = sp + (size_t)row_width;
+
+            for (i = 0; i < row_width; i++)
+            {
+               png_uint_16 v = (png_uint_16)(sp[-1] |
+                   ((png_uint_16)lo_filler << 8));
+
+               dp -= 2;
+               memcpy(dp, &v, 2);
+               sp--;
+            }
+#else
             png_bytep sp = row + (size_t)row_width;
             png_bytep dp =  sp + (size_t)row_width;
             for (i = 1; i < row_width; i++)
@@ -2699,6 +2720,7 @@ png_do_read_filler(png_row_infop row_info, png_bytep row,
                *(--dp) = *(--sp);
             }
             *(--dp) = lo_filler;
+#endif
             row_info->channels = 2;
             row_info->pixel_depth = 16;
             row_info->rowbytes = row_width * 2;
@@ -2707,6 +2729,20 @@ png_do_read_filler(png_row_infop row_info, png_bytep row,
          else
          {
             /* This changes the data from G to XG */
+#ifdef PNG_READ_LITTLE_ENDIAN
+            png_bytep sp = row + (size_t)row_width;
+            png_bytep dp = sp + (size_t)row_width;
+
+            for (i = 0; i < row_width; i++)
+            {
+               png_uint_16 v = (png_uint_16)(lo_filler |
+                   ((png_uint_16)sp[-1] << 8));
+
+               dp -= 2;
+               memcpy(dp, &v, 2);
+               sp--;
+            }
+#else
             png_bytep sp = row + (size_t)row_width;
             png_bytep dp = sp  + (size_t)row_width;
             for (i = 0; i < row_width; i++)
@@ -2714,6 +2750,7 @@ png_do_read_filler(png_row_infop row_info, png_bytep row,
                *(--dp) = *(--sp);
                *(--dp) = lo_filler;
             }
+#endif
             row_info->channels = 2;
             row_info->pixel_depth = 16;
             row_info->rowbytes = row_width * 2;
@@ -2768,6 +2805,26 @@ png_do_read_filler(png_row_infop row_info, png_bytep row,
          if ((flags & PNG_FLAG_FILLER_AFTER) != 0)
          {
             /* This changes the data from RGB to RGBX */
+#ifdef PNG_READ_LITTLE_ENDIAN
+            png_bytep sp = row + (size_t)row_width * 3;
+            png_bytep dp = sp + (size_t)row_width;
+
+            sp -= 3;
+            dp -= 4;
+            memmove(dp, sp, 3);
+            dp[3] = lo_filler;
+
+            for (i = 1; i < row_width; i++)
+            {
+               png_uint_32 v;
+
+               memcpy(&v, sp - 3, 4);
+               v = (v & 0x00ffffffU) | ((png_uint_32)lo_filler << 24);
+               dp -= 4;
+               memcpy(dp, &v, 4);
+               sp -= 3;
+            }
+#else
             png_bytep sp = row + (size_t)row_width * 3;
             png_bytep dp = sp  + (size_t)row_width;
             for (i = 1; i < row_width; i++)
@@ -2778,6 +2835,7 @@ png_do_read_filler(png_row_infop row_info, png_bytep row,
                *(--dp) = *(--sp);
             }
             *(--dp) = lo_filler;
+#endif
             row_info->channels = 4;
             row_info->pixel_depth = 32;
             row_info->rowbytes = row_width * 4;
@@ -2786,6 +2844,26 @@ png_do_read_filler(png_row_infop row_info, png_bytep row,
          else
          {
             /* This changes the data from RGB to XRGB */
+#ifdef PNG_READ_LITTLE_ENDIAN
+            png_bytep sp = row + (size_t)row_width * 3;
+            png_bytep dp = sp + (size_t)row_width;
+
+            sp -= 3;
+            dp -= 4;
+            dp[0] = lo_filler;
+            memmove(dp + 1, sp, 3);
+
+            for (i = 1; i < row_width; i++)
+            {
+               png_uint_32 v;
+
+               memcpy(&v, sp - 3, 4);
+               v = ((v & 0x00ffffffU) << 8) | lo_filler;
+               dp -= 4;
+               memcpy(dp, &v, 4);
+               sp -= 3;
+            }
+#else
             png_bytep sp = row + (size_t)row_width * 3;
             png_bytep dp = sp + (size_t)row_width;
             for (i = 0; i < row_width; i++)
@@ -2795,6 +2873,7 @@ png_do_read_filler(png_row_infop row_info, png_bytep row,
                *(--dp) = *(--sp);
                *(--dp) = lo_filler;
             }
+#endif
             row_info->channels = 4;
             row_info->pixel_depth = 32;
             row_info->rowbytes = row_width * 4;
@@ -4327,6 +4406,34 @@ png_do_expand_palette(png_structrp png_ptr, png_row_infop row_info,
                PNG_UNUSED(png_ptr)
 #endif
 
+#if defined(PNG_READ_LITTLE_ENDIAN) && \
+    !defined(PNG_ARM_NEON_INTRINSICS_AVAILABLE)
+               {
+                  png_uint_32 rgba_lut[256];
+
+                  for (i = 0; i < 256; i++)
+                  {
+                     png_byte alpha = (int)i >= num_trans ? 0xff :
+                         trans_alpha[i];
+
+                     rgba_lut[i] = (png_uint_32)palette[i].red |
+                         ((png_uint_32)palette[i].green << 8) |
+                         ((png_uint_32)palette[i].blue << 16) |
+                         ((png_uint_32)alpha << 24);
+                  }
+
+                  sp = row + (size_t)row_width;
+                  dp = row + ((size_t)row_width << 2);
+
+                  for (i = 0; i < row_width; i++)
+                  {
+                     png_uint_32 v = rgba_lut[*--sp];
+
+                     dp -= 4;
+                     memcpy(dp, &v, 4);
+                  }
+               }
+#else
                for (; i < row_width; i++)
                {
                   if ((int)(*sp) >= num_trans)
@@ -4338,6 +4445,7 @@ png_do_expand_palette(png_structrp png_ptr, png_row_infop row_info,
                   *dp-- = palette[*sp].red;
                   sp--;
                }
+#endif
                row_info->bit_depth = 8;
                row_info->pixel_depth = 32;
                row_info->rowbytes = row_width * 4;
@@ -4357,6 +4465,28 @@ png_do_expand_palette(png_structrp png_ptr, png_row_infop row_info,
                PNG_UNUSED(png_ptr)
 #endif
 
+#if defined(PNG_READ_LITTLE_ENDIAN) && \
+    !defined(PNG_ARM_NEON_INTRINSICS_AVAILABLE)
+               {
+                  png_uint_32 rgb_lut[256];
+
+                  for (i = 0; i < 256; i++)
+                     rgb_lut[i] = (png_uint_32)palette[i].red |
+                         ((png_uint_32)palette[i].green << 8) |
+                         ((png_uint_32)palette[i].blue << 16);
+
+                  sp = row + (size_t)row_width;
+                  dp = row + (size_t)row_width * 3;
+
+                  for (i = 0; i < row_width; i++)
+                  {
+                     png_uint_32 v = rgb_lut[*--sp];
+
+                     dp -= 3;
+                     memcpy(dp, &v, 3);
+                  }
+               }
+#else
                for (; i < row_width; i++)
                {
                   *dp-- = palette[*sp].blue;
@@ -4364,6 +4494,7 @@ png_do_expand_palette(png_structrp png_ptr, png_row_infop row_info,
                   *dp-- = palette[*sp].red;
                   sp--;
                }
+#endif
 
                row_info->bit_depth = 8;
                row_info->pixel_depth = 24;

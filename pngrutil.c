@@ -18,6 +18,10 @@
 
 #ifdef PNG_READ_SUPPORTED
 
+#ifdef PNG_USE_LIBDEFLATE
+#  include <libdeflate.h>
+#endif
+
 png_uint_32 PNGAPI
 png_get_uint_31(png_const_structrp png_ptr, png_const_bytep buf)
 {
@@ -4142,6 +4146,116 @@ png_read_filter_row(png_structrp pp, png_row_infop row_info, png_bytep row,
 }
 
 #ifdef PNG_SEQUENTIAL_READ_SUPPORTED
+#ifdef PNG_USE_LIBDEFLATE
+void /* PRIVATE */
+png_read_IDAT_libdeflate(png_structrp png_ptr, png_bytep output,
+    png_alloc_size_t output_size)
+{
+   png_bytep compressed = NULL;
+   png_alloc_size_t compressed_size = 0;
+   png_alloc_size_t compressed_max = 0;
+   struct libdeflate_decompressor *decoder;
+   enum libdeflate_result result;
+   size_t actual_out = 0;
+
+   for (;;)
+   {
+      png_uint_32 chunk_size = png_ptr->idat_size;
+      png_alloc_size_t needed = compressed_size + chunk_size;
+
+      if (needed < compressed_size)
+         png_error(png_ptr, "IDAT data is too large");
+
+      if (needed > compressed_max)
+      {
+         png_alloc_size_t new_max = compressed_max != 0 ?
+             compressed_max : 65536U;
+
+         while (new_max < needed)
+         {
+            if (new_max > (PNG_SIZE_MAX >> 1))
+            {
+               new_max = needed;
+               break;
+            }
+
+            new_max <<= 1;
+         }
+
+         if (new_max < needed)
+            png_error(png_ptr, "IDAT data is too large");
+
+         {
+            png_bytep new_buffer = (png_bytep)png_malloc(png_ptr, new_max);
+
+            if (compressed_size != 0)
+               memcpy(new_buffer, compressed, compressed_size);
+
+            png_free(png_ptr, compressed);
+            compressed = new_buffer;
+            compressed_max = new_max;
+            png_ptr->idat_compressed = compressed;
+         }
+      }
+
+      if (chunk_size != 0)
+         png_crc_read(png_ptr, compressed + compressed_size, chunk_size);
+
+      compressed_size = needed;
+      png_ptr->idat_size = 0;
+      png_crc_finish(png_ptr, 0);
+
+      {
+         png_uint_32 length = png_read_chunk_header(png_ptr);
+
+         if (png_ptr->chunk_name != png_IDAT)
+         {
+            png_ptr->pending_chunk_length = length;
+            png_ptr->pending_chunk_header = 1;
+            break;
+         }
+
+         png_ptr->idat_size = length;
+      }
+   }
+
+   decoder = libdeflate_alloc_decompressor();
+   if (decoder == NULL)
+      png_error(png_ptr, "Out of memory");
+
+   result = libdeflate_zlib_decompress(decoder, compressed, compressed_size,
+       output, output_size, &actual_out);
+   libdeflate_free_decompressor(decoder);
+
+   if (result != LIBDEFLATE_SUCCESS || actual_out != output_size)
+   {
+      uLongf zlib_out = (uLongf)output_size;
+      int zlib_result = uncompress(output, &zlib_out, compressed,
+          (uLong)compressed_size);
+
+      png_free(png_ptr, compressed);
+      png_ptr->idat_compressed = NULL;
+
+      if (zlib_result != Z_OK || zlib_out != output_size)
+         png_error(png_ptr, "IDAT decompression failed");
+   }
+
+   else
+   {
+      png_free(png_ptr, compressed);
+      png_ptr->idat_compressed = NULL;
+   }
+
+   png_ptr->mode |= PNG_AFTER_IDAT;
+   png_ptr->flags |= PNG_FLAG_ZSTREAM_ENDED;
+   png_ptr->zstream.next_in = NULL;
+   png_ptr->zstream.avail_in = 0;
+   png_ptr->zstream.next_out = NULL;
+   png_ptr->zstream.avail_out = 0;
+   png_ptr->zowner = 0;
+}
+#endif /* PNG_USE_LIBDEFLATE */
+
 void /* PRIVATE */
 png_read_IDAT_data(png_structrp png_ptr, png_bytep output,
     png_alloc_size_t avail_out)
@@ -4663,6 +4777,61 @@ defined(PNG_USER_TRANSFORM_PTR_SUPPORTED)
       png_ptr->read_buffer_size = 0;
       png_ptr->read_buffer = NULL;
       png_free(png_ptr, buffer);
+   }
+
+   /* Non-interlaced rows are laid out back-to-back in the IDAT stream.  Batch
+    * several rows per inflate call so zlib does not return at every row
+    * boundary.  The rows are still filtered and transformed in place.
+    */
+   if (png_ptr->interlaced == 0 && png_ptr->height > 1)
+   {
+      png_alloc_size_t stride = (png_alloc_size_t)png_ptr->rowbytes + 1;
+
+      if (stride <= (PNG_SIZE_MAX / png_ptr->height))
+      {
+         png_alloc_size_t total = stride * png_ptr->height;
+         png_alloc_size_t buffer_size = 0;
+
+#ifdef PNG_USE_LIBDEFLATE
+         if (total <= (256U * 1024U * 1024U))
+         {
+            buffer_size = total;
+            png_ptr->idat_libdeflate = 1;
+            png_ptr->idat_expand =
+                png_ptr->maximum_pixel_depth > png_ptr->pixel_depth;
+         }
+#endif
+
+         if (buffer_size == 0 &&
+             png_ptr->maximum_pixel_depth <= png_ptr->pixel_depth)
+         {
+            png_alloc_size_t target = 256U * 1024U;
+            png_alloc_size_t rows;
+
+            if (target > total)
+               target = total;
+
+            rows = target / stride;
+            if (rows > png_ptr->height)
+               rows = png_ptr->height;
+
+            if (rows > 1)
+               buffer_size = rows * stride;
+         }
+
+         if (buffer_size != 0)
+         {
+            png_ptr->idat_buf_size = buffer_size;
+            png_ptr->idat_buf = (png_bytep)png_malloc(png_ptr, buffer_size);
+            png_ptr->prev_row_base = png_ptr->prev_row;
+            png_ptr->idat_no_copy = png_ptr->transformations == 0 &&
+                png_ptr->idat_expand == 0;
+#ifdef PNG_MNG_FEATURES_SUPPORTED
+            if (png_ptr->filter_type == PNG_INTRAPIXEL_DIFFERENCING)
+               png_ptr->idat_no_copy = 0;
+#endif
+         }
+      }
    }
 
    /* Finally claim the zstream for the inflate of the IDAT data, use the bits

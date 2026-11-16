@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/cat/gsb/uid4019/build-asan/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

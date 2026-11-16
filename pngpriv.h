@@ -1369,6 +1369,10 @@ PNG_INTERNAL_FUNCTION(void,png_write_find_filter,(png_structrp png_ptr,
     png_row_infop row_info),PNG_EMPTY);
 
 #ifdef PNG_SEQUENTIAL_READ_SUPPORTED
+#ifdef PNG_USE_LIBDEFLATE
+PNG_INTERNAL_FUNCTION(void,png_read_IDAT_libdeflate,(png_structrp png_ptr,
+   png_bytep output, png_alloc_size_t output_size),PNG_EMPTY);
+#endif
 PNG_INTERNAL_FUNCTION(void,png_read_IDAT_data,(png_structrp png_ptr,
    png_bytep output, png_alloc_size_t avail_out),PNG_EMPTY);
    /* Read 'avail_out' bytes of data from the IDAT stream.  If the output buffer

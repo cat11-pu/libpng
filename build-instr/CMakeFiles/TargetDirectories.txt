@@ -1,0 +1,14 @@
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/symbol-check.dir
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/genvers.dir
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/gensym.dir
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/genprebuilt.dir
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/genfiles.dir
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/png.dir
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/png_static.dir
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/test.dir
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/edit_cache.dir
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/rebuild_cache.dir
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/list_install_components.dir
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/install.dir
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/install/local.dir
+/home/cat/gsb/uid4019/build-instr/CMakeFiles/install/strip.dir
