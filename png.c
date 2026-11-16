@@ -2532,17 +2532,6 @@ png_colorspace_set_rgb_coefficients(png_structrp png_ptr)
 
 #endif /* COLORSPACE */
 
-#ifdef __GNUC__
-/* This exists solely to work round a warning from GNU C. */
-static int /* PRIVATE */
-png_gt(size_t a, size_t b)
-{
-   return a > b;
-}
-#else
-#   define png_gt(a,b) ((a) > (b))
-#endif
-
 void /* PRIVATE */
 png_check_IHDR(png_const_structrp png_ptr,
     png_uint_32 width, png_uint_32 height, int bit_depth,
@@ -2564,8 +2553,11 @@ png_check_IHDR(png_const_structrp png_ptr,
       error = 1;
    }
 
-   if (png_gt(((width + 7) & (~7U)),
-       ((PNG_SIZE_MAX
+   /* The mask must be at least as wide as png_uint_32.  The cast also avoids
+    * an always-false comparison warning on 64-bit systems.
+    */
+   if (((width + 7) & ~(png_alloc_size_t)7) >
+       (((PNG_SIZE_MAX
            - 48        /* big_row_buf hack */
            - 1)        /* filter byte */
            / 8)        /* 8-byte RGBA pixels */

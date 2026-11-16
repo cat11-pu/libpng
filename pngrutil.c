@@ -298,6 +298,23 @@ static png_bytep
 png_read_buffer(png_structrp png_ptr, png_alloc_size_t new_size, int warn)
 {
    png_bytep buffer = png_ptr->read_buffer;
+   png_alloc_size_t limit = PNG_UINT_31_MAX;
+
+# ifdef PNG_SET_USER_LIMITS_SUPPORTED
+   if (png_ptr->user_chunk_malloc_max > 0 &&
+       png_ptr->user_chunk_malloc_max < limit)
+      limit = png_ptr->user_chunk_malloc_max;
+# elif PNG_USER_CHUNK_MALLOC_MAX > 0
+   if (PNG_USER_CHUNK_MALLOC_MAX < limit)
+      limit = PNG_USER_CHUNK_MALLOC_MAX;
+# endif
+
+   /* Never allocate more than the configured chunk limit.  The IDAT reader
+    * asks for at most IDAT_read_size bytes, so this only affects malformed or
+    * oversized ancillary chunks.
+    */
+   if (new_size > limit)
+      return NULL;
 
    if (buffer != NULL && new_size > png_ptr->read_buffer_size)
    {
@@ -331,6 +348,18 @@ png_read_buffer(png_structrp png_ptr, png_alloc_size_t new_size, int warn)
    return buffer;
 }
 #endif /* READ_iCCP|iTXt|pCAL|sCAL|sPLT|tEXt|zTXt|SEQUENTIAL_READ */
+
+/* Detach the zstream from input and output buffers left by the current or a
+ * previous owner.  Those buffers may already have been freed.
+ */
+static void
+png_inflate_detach_buffers(png_structrp png_ptr)
+{
+   png_ptr->zstream.next_in = NULL;
+   png_ptr->zstream.avail_in = 0;
+   png_ptr->zstream.next_out = NULL;
+   png_ptr->zstream.avail_out = 0;
+}
 
 /* png_inflate_claim: claim the zstream for some nefarious purpose that involves
  * decompression.  Returns Z_OK on success, else a zlib error code.  It checks
@@ -392,13 +421,7 @@ png_inflate_claim(png_structrp png_ptr, png_uint_32 owner)
 
 #endif /* ZLIB_VERNUM >= 0x1240 */
 
-      /* Set this for safety, just in case the previous owner left pointers to
-       * memory allocations.
-       */
-      png_ptr->zstream.next_in = NULL;
-      png_ptr->zstream.avail_in = 0;
-      png_ptr->zstream.next_out = NULL;
-      png_ptr->zstream.avail_out = 0;
+      png_inflate_detach_buffers(png_ptr);
 
       if ((png_ptr->flags & PNG_FLAG_ZSTREAM_INITIALIZED) != 0)
       {
@@ -745,7 +768,8 @@ png_decompress_chunk(png_structrp png_ptr,
          else if (ret == Z_OK)
             ret = PNG_UNEXPECTED_ZLIB_RETURN;
 
-         /* Release the claimed stream */
+         /* Release the claimed stream and all stale buffer pointers. */
+         png_inflate_detach_buffers(png_ptr);
          png_ptr->zowner = 0;
       }
 
@@ -1578,6 +1602,7 @@ png_handle_iCCP(png_structrp png_ptr, png_inforp info_ptr, png_uint_32 length)
 
                                     if (errmsg == NULL)
                                     {
+                                       png_inflate_detach_buffers(png_ptr);
                                        png_ptr->zowner = 0;
                                        return;
                                     }
@@ -1604,7 +1629,8 @@ png_handle_iCCP(png_structrp png_ptr, png_inforp info_ptr, png_uint_32 length)
                else /* profile truncated */
                   errmsg = png_ptr->zstream.msg;
 
-               /* Release the stream */
+               /* Release the stream and all stale buffer pointers. */
+               png_inflate_detach_buffers(png_ptr);
                png_ptr->zowner = 0;
             }
 
@@ -3162,19 +3188,43 @@ png_check_chunk_length(png_const_structrp png_ptr, png_uint_32 length)
    if (png_ptr->chunk_name == png_IDAT)
    {
       png_alloc_size_t idat_limit = PNG_UINT_31_MAX;
-      size_t row_factor =
-         (size_t)png_ptr->width
-         * (size_t)png_ptr->channels
-         * (png_ptr->bit_depth > 8? 2: 1)
-         + 1
-         + (png_ptr->interlaced? 6: 0);
-      if (png_ptr->height > PNG_UINT_32_MAX/row_factor)
+      size_t row_factor;
+      size_t pixel_bytes = (size_t)png_ptr->channels *
+          (png_ptr->bit_depth > 8 ? 2 : 1);
+
+      /* Compute the uncompressed row size without wrapping size_t.  A width
+       * close to PNG_UINT_31_MAX can overflow the multiplication on 32-bit
+       * platforms; in that case the IDAT limit is simply the PNG maximum.
+       */
+      if (png_ptr->width != 0 &&
+          pixel_bytes > (PNG_SIZE_MAX - 7) / (size_t)png_ptr->width)
+         row_factor = PNG_SIZE_MAX;
+
+      else
+         row_factor = (size_t)png_ptr->width * pixel_bytes + 1 +
+             (png_ptr->interlaced != 0 ? 6 : 0);
+
+      if (row_factor == 0 ||
+          (size_t)png_ptr->height > (PNG_SIZE_MAX - 11) / row_factor)
          idat_limit = PNG_UINT_31_MAX;
       else
-         idat_limit = png_ptr->height * row_factor;
-      row_factor = row_factor > 32566? 32566 : row_factor;
-      idat_limit += 6 + 5*(idat_limit/row_factor+1); /* zlib+deflate overhead */
-      idat_limit=idat_limit < PNG_UINT_31_MAX? idat_limit : PNG_UINT_31_MAX;
+      {
+         idat_limit = (png_alloc_size_t)png_ptr->height * row_factor;
+         row_factor = row_factor > 32566 ? 32566 : row_factor;
+         if (idat_limit > PNG_UINT_31_MAX - 6)
+            idat_limit = PNG_UINT_31_MAX;
+
+         else
+         {
+            png_alloc_size_t deflate_blocks = idat_limit / row_factor + 1;
+
+            if (deflate_blocks > (PNG_UINT_31_MAX - 6 - idat_limit) / 5)
+               idat_limit = PNG_UINT_31_MAX;
+
+            else
+               idat_limit += 6 + 5 * deflate_blocks;
+         }
+      }
       limit = limit < idat_limit? idat_limit : limit;
    }
 
@@ -4177,6 +4227,15 @@ png_read_IDAT_data(png_structrp png_ptr, png_bytep output,
 
          avail_in = png_ptr->IDAT_read_size;
 
+# ifdef PNG_SET_USER_LIMITS_SUPPORTED
+         if (png_ptr->user_chunk_malloc_max > 0 &&
+             png_ptr->user_chunk_malloc_max < avail_in)
+            avail_in = (uInt)/*SAFE*/png_ptr->user_chunk_malloc_max;
+# elif PNG_USER_CHUNK_MALLOC_MAX > 0
+         if (PNG_USER_CHUNK_MALLOC_MAX < avail_in)
+            avail_in = (uInt)/*SAFE*/PNG_USER_CHUNK_MALLOC_MAX;
+# endif
+
          if (avail_in > png_ptr->idat_size)
             avail_in = (uInt)png_ptr->idat_size;
 
@@ -4186,6 +4245,9 @@ png_read_IDAT_data(png_structrp png_ptr, png_bytep output,
           * big problem.
           */
          buffer = png_read_buffer(png_ptr, avail_in, 0/*error*/);
+
+         if (buffer == NULL)
+            png_chunk_error(png_ptr, "insufficient memory to read IDAT");
 
          png_crc_read(png_ptr, buffer, avail_in);
          png_ptr->idat_size -= avail_in;
@@ -4303,11 +4365,7 @@ png_read_finish_IDAT(png_structrp png_ptr)
     */
    if (png_ptr->zowner == png_IDAT)
    {
-      /* Always do this; the pointers otherwise point into the read buffer. */
-      png_ptr->zstream.next_in = NULL;
-      png_ptr->zstream.avail_in = 0;
-
-      /* Now we no longer own the zstream. */
+      png_inflate_detach_buffers(png_ptr);
       png_ptr->zowner = 0;
 
       /* The slightly weird semantics of the sequential IDAT reading is that we
@@ -4586,8 +4644,32 @@ defined(PNG_USER_TRANSFORM_PTR_SUPPORTED)
    /* Calculate the maximum bytes needed, adding a byte and a pixel
     * for safety's sake
     */
-   row_bytes = PNG_ROWBYTES(max_pixel_depth, row_bytes) +
-       1 + ((max_pixel_depth + 7) >> 3U);
+   if (max_pixel_depth == 0)
+      png_error(png_ptr, "Invalid pixel depth");
+
+   else if (max_pixel_depth >= 8)
+   {
+      size_t pixel_bytes = max_pixel_depth >> 3;
+      size_t extra = 1 + ((max_pixel_depth + 7) >> 3U);
+
+      if (row_bytes > (PNG_SIZE_MAX - extra) / pixel_bytes)
+         png_error(png_ptr, "Image row is too large");
+
+      row_bytes *= pixel_bytes;
+   }
+
+   else
+   {
+      if (row_bytes > (PNG_SIZE_MAX - 7) / max_pixel_depth)
+         png_error(png_ptr, "Image row is too large");
+
+      row_bytes = (row_bytes * max_pixel_depth + 7) >> 3;
+   }
+
+   row_bytes += 1 + ((max_pixel_depth + 7) >> 3U);
+
+   if (row_bytes > PNG_SIZE_MAX - 48)
+      png_error(png_ptr, "Image row is too large");
 
 #ifdef PNG_MAX_MALLOC_64K
    if (row_bytes > (png_uint_32)65536L)

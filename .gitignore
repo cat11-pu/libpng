@@ -72,3 +72,11 @@ timepng
 
 # Libpng CI artifacts
 out/
+
+# Local security/fuzz artifacts
+__pycache__/
+*.pyc
+build-asan/
+build-test/
+fuzzlab/build/
+fuzzlab/corpus/

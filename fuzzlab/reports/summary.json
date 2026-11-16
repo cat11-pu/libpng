@@ -1,0 +1,33 @@
+{
+ "malformed_total": 3000,
+ "clean_reject": 3000,
+ "decoded": 0,
+ "crash": 0,
+ "timeout": 0,
+ "offset_complete": 3000,
+ "sanitizer_events": 0,
+ "valid_total": 500,
+ "valid_pixel_identical": 500,
+ "valid_failures": 0,
+ "max_alloc_peak_bytes": 51494,
+ "categories": {
+  "truncation": {
+   "clean_reject": 500
+  },
+  "idat_truncation": {
+   "clean_reject": 500
+  },
+  "length_mismatch": {
+   "clean_reject": 500
+  },
+  "oversize": {
+   "clean_reject": 500
+  },
+  "illegal_filter": {
+   "clean_reject": 500
+  },
+  "cyclic_chunk": {
+   "clean_reject": 500
+  }
+ }
+}
