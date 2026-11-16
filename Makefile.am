@@ -12,7 +12,7 @@ PNGLIB_BASENAME= libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@
 ACLOCAL_AMFLAGS = -I scripts
 
 # test programs - run on make check, make distcheck
-check_PROGRAMS= pngtest pngunknown pngstest pngvalid pngimage pngcp
+check_PROGRAMS= pngtest pngregion pngunknown pngstest pngvalid pngimage pngcp
 if HAVE_CLOCK_GETTIME
 check_PROGRAMS += timepng
 endif
@@ -32,6 +32,9 @@ BUILT_SOURCES = pnglibconf.h
 
 pngtest_SOURCES = pngtest.c
 pngtest_LDADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
+
+pngregion_SOURCES = contrib/libtests/pngregion.c
+pngregion_LDADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
 
 pngvalid_SOURCES = contrib/libtests/pngvalid.c
 pngvalid_LDADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
@@ -59,7 +62,7 @@ pngcp_LDADD = libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
 # Generally these are single line shell scripts to run a test with a particular
 # set of parameters:
 TESTS =\
-   tests/pngtest-all\
+   tests/pngtest-all tests/pngregion tests/pngregion-memory\
    tests/pngvalid-gamma-16-to-8 tests/pngvalid-gamma-alpha-mode\
    tests/pngvalid-gamma-background tests/pngvalid-gamma-expand16-alpha-mode\
    tests/pngvalid-gamma-expand16-background\
@@ -88,7 +91,8 @@ bin_SCRIPTS= @binconfigs@
 lib_LTLIBRARIES=libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@.la
 # EXTRA_LTLIBRARIES= libpng.la
 libpng@PNGLIB_MAJOR@@PNGLIB_MINOR@_la_SOURCES = png.c pngerror.c\
-	pngget.c pngmem.c pngpread.c pngread.c pngrio.c pngrtran.c pngrutil.c\
+	pngget.c pngmem.c pngpread.c pngread.c pngregion.c pngrio.c\
+	pngrtran.c pngrutil.c\
 	pngset.c pngtrans.c pngwio.c pngwrite.c pngwtran.c pngwutil.c\
 	png.h pngconf.h pngdebug.h pnginfo.h pngpriv.h pngstruct.h pngusr.dfa
 

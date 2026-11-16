@@ -2740,6 +2740,43 @@ where row_pointers is:
 
 You can point to void or char or whatever you use for pixels.
 
+If the PNG data arrives in chunks and only one rectangular region is
+needed, use png_region_reader_create() before feeding the signature and
+following chunks to png_region_reader_feed().  The reader clips the
+rectangle to the image, delivers region rows through a callback, and never
+requires a whole-image pixel buffer:
+
+   png_structp png_ptr = png_create_read_struct(...);
+   png_infop info_ptr = png_create_info_struct(png_ptr);
+   png_region_readerp reader;
+
+   if (setjmp(png_jmpbuf(png_ptr)))
+      /* handle the libpng error */;
+
+   reader = png_region_reader_create(png_ptr, info_ptr,
+       x, y, width, height, NULL /*info_fn*/, region_row, user_data);
+
+   while (data_available)
+      if (png_region_reader_feed(reader, data, length) != 0)
+         break;
+
+   png_region_reader_destroy(reader);
+
+The row callback receives transformed pixels for one clipped region row;
+rowbytes is the byte size of that row.  An optional info_fn may set the
+same read transformations as a normal full-image decode.  It must not call
+png_read_update_info() or png_set_interlace_handling().
+
+Rows above the region are decoded and discarded because the PNG filter
+chain is sequential.  For a non-interlaced image decoding stops after the
+last row intersecting the region, so rows below it are not decoded.  For
+an interlaced image the Adam7 passes must be inspected before complete
+output rows can be delivered, but only the clipped region rows are
+retained.  In both cases the result is pixel-for-pixel identical to
+decoding the whole image with the same transformations and cropping the
+requested rectangle.  Unused padding bits at the end of a packed region
+row are zero.
+
 If you don't want to read in the whole image at once, you can
 use png_read_rows() instead.  If there is no interlacing (check
 interlace_type == PNG_INTERLACE_NONE), this is simple:

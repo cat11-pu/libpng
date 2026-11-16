@@ -478,6 +478,7 @@ set(libpng_sources
     pngmem.c
     pngpread.c
     pngread.c
+    pngregion.c
     pngrio.c
     pngrtran.c
     pngrutil.c
@@ -494,6 +495,9 @@ set(libpng_sources
 )
 set(pngtest_sources
     pngtest.c
+)
+set(pngregion_sources
+    contrib/libtests/pngregion.c
 )
 set(pngvalid_sources
     contrib/libtests/pngvalid.c
@@ -645,6 +649,17 @@ if(PNG_TESTS AND PNG_SHARED)
   png_add_test(NAME pngtest
                COMMAND pngtest
                FILES "${PNGTEST_PNG}")
+
+  add_executable(pngregion ${pngregion_sources})
+  target_link_libraries(pngregion png)
+
+  png_add_test(NAME pngregion
+               COMMAND pngregion
+               OPTIONS --self-test)
+
+  png_add_test(NAME pngregion-memory
+               COMMAND pngregion
+               OPTIONS --memory)
 
   add_executable(pngvalid ${pngvalid_sources})
   target_link_libraries(pngvalid png)

@@ -1672,6 +1672,66 @@ PNG_EXPORT(89, png_voidp, png_get_user_chunk_ptr, (png_const_structrp png_ptr));
 #endif
 
 #ifdef PNG_PROGRESSIVE_READ_SUPPORTED
+/* Narrow streaming interface for decoding one rectangular region.
+ *
+ * The reader consumes a complete PNG datastream supplied in arbitrarily sized
+ * chunks.  Only rows intersecting the requested rectangle are delivered, and
+ * each delivered row contains exactly the columns intersecting that rectangle.
+ * Rows are delivered from top to bottom.  The pixels are identical to decoding
+ * the whole image with the same transformations and then cropping.
+ *
+ * The reader does not take ownership of png_ptr or info_ptr; destroy the
+ * reader before destroying either of them.  The application must have set up
+ * its normal libpng error handling (setjmp) before calling these functions.
+ *
+ * The optional info_fn is called once, as soon as the image header is
+ * available.  It may set read transformations, but it must not call
+ * png_read_update_info or png_set_interlace_handling.  The clipped rectangle
+ * is available from png_region_reader_get_region() inside info_fn.  The row
+ * callback is called with the transformed pixel data after the region has been
+ * clipped to the image.  Its data pointer is valid only for the duration of the
+ * call.
+ *
+ * For non-interlaced images rows are delivered while data is fed and decoding
+ * stops after the last row intersecting the region.  For interlaced images all
+ * Adam7 passes contributing to the region must be inspected before the rows
+ * are delivered, because a complete output row cannot be produced until its
+ * final pass has arrived.  In both cases libpng keeps only whole transformed
+ * scanlines plus the clipped region rows; it never keeps a whole-image pixel
+ * buffer.
+ *
+ * png_region_reader_feed() returns 1 once the requested region is complete
+ * (or the PNG end has been reached), 0 if more data is required.  Decoding
+ * stops as soon as the last required region row (or Adam7 pass row) has been
+ * produced; trailing image data is then intentionally ignored.
+ */
+typedef struct png_region_reader png_region_reader;
+typedef png_region_reader * png_region_readerp;
+typedef const png_region_reader * png_const_region_readerp;
+
+typedef PNG_CALLBACK(void, *png_region_info_ptr,
+    (png_structp, png_infop, png_voidp));
+typedef PNG_CALLBACK(void, *png_region_row_ptr,
+    (png_structp, png_uint_32, png_const_bytep, size_t, png_voidp));
+
+PNG_EXPORT(250, png_region_readerp, png_region_reader_create,
+    (png_structrp png_ptr, png_inforp info_ptr, png_uint_32 x, png_uint_32 y,
+    png_uint_32 width, png_uint_32 height, png_region_info_ptr info_fn,
+    png_region_row_ptr row_fn, png_voidp user_data));
+
+PNG_EXPORT(251, int, png_region_reader_feed,
+    (png_region_readerp reader, png_const_bytep data, size_t size));
+
+PNG_EXPORT(252, int, png_region_reader_end,
+    (png_const_region_readerp reader));
+
+PNG_EXPORT(253, int, png_region_reader_get_region,
+    (png_const_region_readerp reader, png_uint_32 *x, png_uint_32 *y,
+    png_uint_32 *width, png_uint_32 *height));
+
+PNG_EXPORT(254, void, png_region_reader_destroy,
+    (png_region_readerp reader));
+
 /* Sets the function callbacks for the push reader, and a pointer to a
  * user-defined structure available to the callback functions.
  */
@@ -3235,7 +3295,7 @@ PNG_EXPORT(244, int, png_set_option, (png_structrp png_ptr, int option,
  * one to use is one more than this.)
  */
 #ifdef PNG_EXPORT_LAST_ORDINAL
-  PNG_EXPORT_LAST_ORDINAL(249);
+  PNG_EXPORT_LAST_ORDINAL(254);
 #endif
 
 #ifdef __cplusplus

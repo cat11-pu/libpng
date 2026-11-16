@@ -253,3 +253,8 @@ EXPORTS
  png_set_eXIf @247
  png_get_eXIf_1 @248
  png_set_eXIf_1 @249
+ png_region_reader_create @250
+ png_region_reader_feed @251
+ png_region_reader_end @252
+ png_region_reader_get_region @253
+ png_region_reader_destroy @254
