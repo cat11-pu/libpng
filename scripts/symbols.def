@@ -253,3 +253,13 @@ EXPORTS
  png_set_eXIf @247
  png_get_eXIf_1 @248
  png_set_eXIf_1 @249
+ png_apng_create_read_memory @250
+ png_apng_create_read_file @251
+ png_apng_destroy @252
+ png_apng_is_valid @253
+ png_apng_get_error @254
+ png_apng_get_info @255
+ png_apng_rewind @256
+ png_apng_next_frame @257
+ png_apng_seek_frame @258
+ png_apng_get_current_frame @259

@@ -610,6 +610,57 @@ typedef png_time * png_timep;
 typedef const png_time * png_const_timep;
 typedef png_time * * png_timepp;
 
+/* APNG decoding support.
+ *
+ * An APNG decoder is an independent playback session: it owns the output
+ * canvas, the previous-frame canvas and the frame cursor.  Applications that
+ * switch scenes must use one decoder per scene (or call png_apng_rewind)
+ * before starting playback; this prevents frame and disposal state from
+ * leaking from one scene into the next.
+ */
+typedef struct png_apng_def png_apng;
+typedef png_apng * png_apngp;
+typedef const png_apng * png_const_apngp;
+typedef png_apng * * png_apngpp;
+
+#define PNG_APNG_DISPOSE_OP_NONE       0
+#define PNG_APNG_DISPOSE_OP_BACKGROUND 1
+#define PNG_APNG_DISPOSE_OP_PREVIOUS   2
+
+#define PNG_APNG_BLEND_OP_SOURCE       0
+#define PNG_APNG_BLEND_OP_OVER         1
+
+/* Returned by png_apng_get_current_frame before the first frame has been
+ * produced by the current playback session.
+ */
+#define PNG_APNG_NO_FRAME PNG_UINT_32_MAX
+
+typedef struct png_apng_info
+{
+   png_uint_32 width;          /* APNG canvas width */
+   png_uint_32 height;         /* APNG canvas height */
+   png_uint_32 num_frames;     /* number of animation frames */
+   png_uint_32 num_plays;      /* 0: loop forever */
+   png_byte bit_depth;         /* source bit depth */
+   png_byte color_type;        /* source PNG color type */
+   png_byte interlace_type;    /* source PNG interlace method */
+   png_byte default_image_is_frame; /* non-zero if IDAT is frame 0 */
+} png_apng_info;
+
+typedef struct png_apng_frame
+{
+   png_uint_32 frame_index;
+   png_uint_32 width;          /* frame rectangle width */
+   png_uint_32 height;         /* frame rectangle height */
+   png_uint_32 x_offset;       /* frame rectangle position on the canvas */
+   png_uint_32 y_offset;
+   png_uint_16 delay_num;      /* exact APNG delay numerator */
+   png_uint_16 delay_den;      /* effective denominator; never zero */
+   png_uint_32 delay_ms;       /* delay rounded to the nearest millisecond */
+   png_byte dispose_op;
+   png_byte blend_op;
+} png_apng_frame;
+
 #if defined(PNG_STORE_UNKNOWN_CHUNKS_SUPPORTED) ||\
    defined(PNG_USER_CHUNKS_SUPPORTED)
 /* png_unknown_chunk is a structure to hold queued chunks for which there is
@@ -3227,6 +3278,51 @@ PNG_EXPORT(244, int, png_set_option, (png_structrp png_ptr, int option,
  *  END OF HARDWARE AND SOFTWARE OPTIONS
  ******************************************************************************/
 
+/* APNG read API.
+ *
+ * png_apng_create_read_memory() and png_apng_create_read_file() return an
+ * opaque decoder even when the input is not a valid APNG; NULL is returned
+ * only when memory cannot be allocated.  Use png_apng_is_valid() or
+ * png_apng_get_info() to distinguish these cases and png_apng_get_error() to
+ * obtain a diagnostic.
+ *
+ * png_apng_next_frame() writes one already-composited canvas as tightly
+ * packed RGBA8 pixels.  'stride' is in bytes and must be at least
+ * (canvas width * 4); pass 0 to use tightly packed rows.  The frame metadata
+ * is returned even when the caller does not need a copy of the pixels
+ * ('rgba' may be NULL, and 'frame' may be NULL).
+ *
+ * Return values for png_apng_next_frame():
+ *    1  a frame was produced
+ *    0  the end of this play-through was reached (call rewind to repeat)
+ *   -1  decoding failed; see png_apng_get_error()
+ *
+ * The color channels are straight (non-premultiplied) RGBA.  Palette, tRNS,
+ * grayscale and 16-bit inputs are normalized to 8-bit RGBA.  OVER blending
+ * follows the APNG source-over equations, including alpha.
+ *
+ * png_apng_seek_frame() leaves the canvas at 'frame_index' and updates
+ * png_apng_get_current_frame().  The next png_apng_next_frame() call returns
+ * frame_index + 1.
+ */
+PNG_EXPORT(250, png_apngp, png_apng_create_read_memory,
+    (png_const_bytep data, size_t size));
+PNG_EXPORT(251, png_apngp, png_apng_create_read_file,
+    (png_const_charp file_name));
+PNG_EXPORT(252, void, png_apng_destroy, (png_apngpp apng_ptr));
+PNG_EXPORT(253, int, png_apng_is_valid, (png_const_apngp apng_ptr));
+PNG_EXPORT(254, png_const_charp, png_apng_get_error,
+    (png_const_apngp apng_ptr));
+PNG_EXPORT(255, int, png_apng_get_info, (png_const_apngp apng_ptr,
+    png_apng_info *info));
+PNG_EXPORT(256, int, png_apng_rewind, (png_apngp apng_ptr));
+PNG_EXPORT(257, int, png_apng_next_frame, (png_apngp apng_ptr,
+    png_bytep rgba, size_t stride, png_apng_frame *frame));
+PNG_EXPORT(258, int, png_apng_seek_frame, (png_apngp apng_ptr,
+    png_uint_32 frame_index));
+PNG_EXPORT(259, png_uint_32, png_apng_get_current_frame,
+    (png_const_apngp apng_ptr));
+
 /* Maintainer: Put new public prototypes here ^, in libpng.3, in project
  * defs, and in scripts/symbols.def.
  */
@@ -3235,7 +3331,7 @@ PNG_EXPORT(244, int, png_set_option, (png_structrp png_ptr, int option,
  * one to use is one more than this.)
  */
 #ifdef PNG_EXPORT_LAST_ORDINAL
-  PNG_EXPORT_LAST_ORDINAL(249);
+  PNG_EXPORT_LAST_ORDINAL(259);
 #endif
 
 #ifdef __cplusplus

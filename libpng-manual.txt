@@ -4188,6 +4188,76 @@ calculate the row_stride for you from the width and number of channels.
 Note that the write API does not support interlacing, sub-8-bit pixels,
 indexed (paletted) images, or most ancillary chunks.
 
+APNG decoding
+
+An APNG decoder is created with either
+
+   png_apngp png_apng_create_read_memory(png_const_bytep data, size_t size);
+   png_apngp png_apng_create_read_file(png_const_charp file_name);
+
+Both calls return an opaque playback session.  The input is copied, so the
+caller may release its buffer after the call.  A non-NULL result that is not
+valid (for example, because the input is a plain PNG or has a bad chunk
+sequence) still owns a diagnostic string; use png_apng_is_valid(),
+png_apng_get_info() and png_apng_get_error() to inspect it.  NULL is returned
+only if the session itself cannot be allocated.  Release a session with
+png_apng_destroy(&apng).
+
+The canvas and every produced frame are 8-bit, straight-alpha RGBA.  Palette,
+tRNS, grayscale and 16-bit inputs are normalized by the normal libpng read
+transformations.  No gamma or ICC profile conversion is applied; the returned
+values are the PNG sample values.  A row is (canvas width * 4) bytes.  The
+caller passes a buffer and an optional byte stride:
+
+   png_apng_info info;
+   png_apng_frame frame;
+   png_bytep rgba;
+   int result;
+
+   png_apng_get_info(apng, &info);
+   rgba = malloc((size_t)info.width * info.height * 4);
+
+   while ((result = png_apng_next_frame(apng, rgba, 0, &frame)) == 1)
+   {
+      /* frame.delay_num / frame.delay_den is the exact delay. */
+      /* frame.delay_ms is that delay rounded to the nearest millisecond. */
+      /* rgba now contains the fully composited canvas for this frame. */
+   }
+
+png_apng_next_frame() returns 1 for a frame, 0 at the end of one play-through,
+and -1 on a decode error.  num_plays is returned in png_apng_info; the caller
+decides how many times to call png_apng_rewind() and replay.  A delay
+denominator of zero is normalized to 100, as required by the APNG
+specification.
+
+dispose_op and blend_op are applied in the APNG order.  The decoder keeps the
+previous canvas needed by PNG_APNG_DISPOSE_OP_PREVIOUS and clears only the
+active frame rectangle for PNG_APNG_DISPOSE_OP_BACKGROUND.
+PNG_APNG_BLEND_OP_OVER uses the source-over equations for both color and
+alpha, not a per-channel interpolation of the alpha channel.  The first frame
+is composited onto a fully transparent black canvas.  When the default IDAT
+image is not part of the animation it is ignored.
+
+For scene changes, use one decoder per scene or call
+png_apng_rewind() before starting the new scene.  rewind() clears the canvas,
+discards disposal history, resets the frame cursor and clears a previous
+playback error.  png_apng_seek_frame() provides deterministic frame-index
+seeking; it rewinds automatically when seeking backwards.  After seeking to
+frame N the canvas is at frame N and the next call returns frame N+1.  This
+avoids carrying a stale PREVIOUS canvas or frame cursor into a new scene.
+
+The parser validates CRC, chunk order, acTL/fcTL/fdAT sequence numbers,
+frame rectangles, palette and tRNS sizes, frame counts, delay/dispose/blend
+fields, and the requirement that an IDAT-backed first frame cover the whole
+canvas.  Trailing bytes after IEND are ignored.  Unknown ancillary chunks are
+ignored.  A malformed file is rejected before frame zero is returned when the
+problem is structural; a bad compressed frame is reported by the next
+png_apng_next_frame() call.
+
+The decoder keeps only the compressed frame data and a small number of
+canvas-sized work buffers.  Repeated play-throughs reuse those buffers; a
+10,000-frame rewind loop is part of contrib/libtests/pngapng.c.
+
 VI. Modifying/Customizing libpng
 
 There are two issues here.  The first is changing how libpng does

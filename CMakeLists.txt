@@ -473,6 +473,7 @@ set(libpng_sources
     ${libpng_public_hdrs}
     ${libpng_private_hdrs}
     png.c
+    pngapng.c
     pngerror.c
     pngget.c
     pngmem.c
@@ -506,6 +507,9 @@ set(pngunknown_sources
 )
 set(pngimage_sources
     contrib/libtests/pngimage.c
+)
+set(pngapngtest_sources
+    contrib/libtests/pngapng.c
 )
 set(pngfix_sources
     contrib/tools/pngfix.c
@@ -790,6 +794,12 @@ if(PNG_TESTS AND PNG_SHARED)
                COMMAND pngimage
                OPTIONS --exhaustive --list-combos --log
                FILES ${PNGSUITE_PNGS})
+
+  add_executable(pngapngtest ${pngapngtest_sources})
+  target_link_libraries(pngapngtest png)
+
+  png_add_test(NAME pngapng
+               COMMAND pngapngtest)
 endif()
 
 if(PNG_SHARED AND PNG_EXECUTABLES)

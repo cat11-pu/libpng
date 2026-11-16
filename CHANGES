@@ -6104,6 +6104,8 @@ Version 1.6.37 [April 14, 2019]
   Cleaned up various makefiles.
 
 Version 1.6.38 [TODO]
+  Added an APNG decoding API with frame compositing, disposal/blend handling,
+    delay metadata, deterministic rewind/seek and a 10,000-frame self-test.
 
 Send comments/corrections/commendations to png-mng-implement at lists.sf.net.
 Subscription is required; visit
